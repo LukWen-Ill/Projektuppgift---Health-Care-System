@@ -15,13 +15,12 @@ class User
     public Role UserRole;
     public Location AssignedLocation;
     public Region AssignedRegion;
-    public List<Permission> permissions = new List<Permission>();
 
     //  Constructor
     public User(string username, string password)
     // When a new User is created the variables taken in are UserID, Username, Password.
     {
-        UserID = SetID(); // DEV hardcoded until function SetID() done
+        UserID = 1; // DEV hardcoded until function SetID() done
         Username = username;
         Password = password;
         UserRole = Role.User;                   // User default get role User.
@@ -34,6 +33,10 @@ class User
     {
         Hospital = 1,
     }
+    public enum Region // Locations can be added
+    {
+        Region = 1,
+    }
 
     public enum Role // Set list of Roles.
     {
@@ -41,13 +44,5 @@ class User
         Admin,
         Staff,
         Patient,
-    }
-    enum Permissions
-    {
-
-    }
-    public UInt32 SetID() // Unsigned int - goes from 0-32bit
-    {
-        return;
     }
 }
