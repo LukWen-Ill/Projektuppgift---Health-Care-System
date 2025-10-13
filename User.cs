@@ -1,14 +1,14 @@
 namespace App;
 // User class - A new user.
 class User
-// All Users have: 
-// UserID. will be set dynamicly
-// Username. 
-// Password.
-// Role is defaulted to Role.User.
-// Location is defaulted to Hospital.
-// Region is defaulted to Region.
 {
+    // All Users have: 
+    // UserID. will be set dynamicly
+    // Username. 
+    // Password.
+    // Role is defaulted to Role.User.
+    // Location is defaulted to Hospital.
+    // Region is defaulted to Region.
     public int UserID; // DEV: needs to be autoset via function GetUserID() (måste va en float())
     public string Username;
     public string Password;
