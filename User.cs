@@ -5,15 +5,14 @@ class User
     public int UserID;
     public string Username;
     public string Password;
-    public Permission permission;
+
 
     //  Constructor
-    public User(int userID, string username, string password, Permission permissions)
+    public User(int userID, string username, string password)
     {
         UserID = userID;
         Username = username;
         Password = password;
-        permission = permissions;
     }
 
     public enum Location
