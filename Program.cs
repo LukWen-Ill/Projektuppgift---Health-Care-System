@@ -35,9 +35,9 @@ while (true)
     if (active_user == null && input == "2")
     {
         Console.Write("enter username: ");
-        string u_input = Console.ReadLine();
+        string? u_input = Console.ReadLine();
         Console.Write("enter password: ");
-        string p_input = Console.ReadLine();
+        string? p_input = Console.ReadLine();
 
         foreach (User user in users)
         {
