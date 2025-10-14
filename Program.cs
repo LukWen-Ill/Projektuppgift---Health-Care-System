@@ -46,11 +46,6 @@ using (StreamWriter writer = new StreamWriter(path_userCsv))
     }
 }
 
-foreach (User user in users)
-{
-    Console.WriteLine(user.Username);
-}
-
 User? active_user = null;
 
 while (true)
@@ -62,51 +57,76 @@ while (true)
 
     if (active_user == null && input == "1")
     {
+        bool is_viable = true;
         Console.Write("enter username: ");
         string? u_input = Console.ReadLine();
-        Console.Write("enter password: ");
-        string? p_input = Console.ReadLine();
-
-        if (!String.IsNullOrWhiteSpace(u_input) && !String.IsNullOrWhiteSpace(p_input)) // BEK av MAX
-        {
-            {
-                User user = new User(userID_count, u_input, p_input, User.Role.User, User.Location.Hospital, User.Region.Region);
-                users.Add(user);
-                Console.WriteLine("user added, ID: " + userID_count);
-            }
-            // counter for UserID
-            userID_count++;
-            File.WriteAllText(path_countTxt, userID_count.ToString());
-
-            // writes from list to Users.csv
-            using (StreamWriter writer = new StreamWriter(path_userCsv))
-            {
-                foreach (User user in users)
-                {
-                    writer.WriteLine(user.ToCsv());
-                }
-            }
-        }
-        else
-        {
-            Console.WriteLine("invalid input");
-        }
-    }
-
-    if (active_user == null && input == "2")
-    {
-        Console.Write("enter username: ");
-        string? u_input = Console.ReadLine();
-        Console.Write("enter password: ");
-        string? p_input = Console.ReadLine();
 
         foreach (User user in users)
         {
-            if (u_input == user.Username && p_input == user.Password)
+            if (user.Username == u_input)
             {
-                active_user = user;
-                Console.WriteLine("login sucessful");
+                Console.WriteLine($"Username: {u_input} is already in use.");
+
+                Console.WriteLine("press enter to continue..");
+                Console.ReadLine();
+
+                is_viable = false;
+                break;
             }
         }
+        if (is_viable)
+        {
+            Console.Write("enter password: ");
+            string? p_input = Console.ReadLine();
+
+            if (!String.IsNullOrWhiteSpace(u_input) && !String.IsNullOrWhiteSpace(p_input)) // BEK av MAX
+            {
+                {
+                    User user = new User(userID_count, u_input, p_input, User.Role.User, User.Location.Hospital, User.Region.Region);
+                    users.Add(user);
+                    Console.WriteLine("user added, ID: " + userID_count);
+                }
+                // counter for UserID
+                userID_count++;
+                File.WriteAllText(path_countTxt, userID_count.ToString());
+
+                // writes from list to Users.csv
+                using (StreamWriter writer = new StreamWriter(path_userCsv))
+                {
+                    foreach (User user in users)
+                    {
+                        writer.WriteLine(user.ToCsv());
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("invalid input");
+            }
+        }
+        if (active_user == null && input == "2")
+        {
+            Console.Write("enter username: ");
+            u_input = Console.ReadLine();
+            Console.Write("enter password: ");
+            string? p_input = Console.ReadLine();
+
+            foreach (User user in users)
+            {
+                if (u_input == user.Username && p_input == user.Password)
+                {
+                    active_user = user;
+                    Console.WriteLine("login sucessful");
+                    break;
+                }
+            }
+            if (active_user == null)
+            {
+                Console.WriteLine("login failed. Press Enter to continue");
+                Console.ReadLine();
+            }
+
+        }
+
     }
 }
