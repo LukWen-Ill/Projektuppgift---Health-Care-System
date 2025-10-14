@@ -46,22 +46,27 @@ class User
         Patient,
     }
     public string ToCsv()
-    {
+    {//       Interpolation transform any datatype to string.
         return $"{UserID},{Username},{Password},{UserRole},{AssignedLocation},{AssignedRegion}";
     }
-    public static User FromCsv(string line)
+    public User FromCsv(string user)
     {
-        string[] var = line.Split(','); // saves each varible in string array
+        string[] var = user.Split(','); // saves each varible in string array.
 
-        if (var.Length < 6)
+        // check for correct data handling.
+        if (var.Length != 6)
+        {
             return null;
+        }
 
+        // parse string to int.
+        int.TryParse(var[0], out int userID);
+
+        // parse string to enum
         Role role = (Role)Enum.Parse(typeof(Role), var[3]);
         Location location = (Location)Enum.Parse(typeof(Location), var[4]);
         Region region = (Region)Enum.Parse(typeof(Region), var[5]);
 
-        return new User(id, var[1], var[2], role, location, region);
-
-
+        return new User(userID, var[1], var[2], role, location, region);
     }
 }
