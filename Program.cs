@@ -2,6 +2,8 @@
 
 // creates Users.csv.
 string path_userCsv = FileHandler.GetDataPath("Users.csv");
+// creates Count.Txt.
+string path_countTxt = FileHandler.GetDataPath("Count.txt");
 
 // create hardcoded users.
 // User testUser = new User(1, "Lukas", "1", User.Role.Admin, User.Location.Hospital, User.Region.Region);
@@ -18,13 +20,10 @@ List<User> users = new List<User>();
 // users.Add(testUser);
 //
 
-using (StreamWriter writer = new StreamWriter(path_userCsv, true))
-{
-    foreach (User user in users)
-    {
-        writer.WriteLine(user.ToCsv());
-    }
-}
+// gets count from Count.txt and converts to int.
+string s_userID_count = File.ReadAllText(path_countTxt);
+int.TryParse(s_userID_count, out int userID_count);
+
 
 // reads from Users.csv and adds list.
 using StreamReader reader = new StreamReader(path_userCsv);
@@ -37,13 +36,20 @@ using StreamReader reader = new StreamReader(path_userCsv);
         users.Add(user);
     }
 }
+
+// writes from list to Users.csv
+using (StreamWriter writer = new StreamWriter(path_userCsv))
+{
+    foreach (User user in users)
+    {
+        writer.WriteLine(user.ToCsv());
+    }
+}
+
 foreach (User user in users)
 {
     Console.WriteLine(user.Username);
 }
-
-
-int userID_count = 1; // DEV: should call on filereader for Count.csv
 
 User? active_user = null;
 
@@ -63,9 +69,23 @@ while (true)
 
         if (!String.IsNullOrWhiteSpace(u_input) && !String.IsNullOrWhiteSpace(p_input)) // BEK av MAX
         {
-            // User user = new User(Count.RegisterUser(userID_count), u_input, p_input, )User.Role.User;
-            // users.Add(user);
-            Console.WriteLine("user added");
+            {
+                User user = new User(userID_count, u_input, p_input, User.Role.User, User.Location.Hospital, User.Region.Region);
+                users.Add(user);
+                Console.WriteLine("user added, ID: " + userID_count);
+            }
+            // counter for UserID
+            userID_count++;
+            File.WriteAllText(path_countTxt, userID_count.ToString());
+
+            // writes from list to Users.csv
+            using (StreamWriter writer = new StreamWriter(path_userCsv))
+            {
+                foreach (User user in users)
+                {
+                    writer.WriteLine(user.ToCsv());
+                }
+            }
         }
         else
         {
