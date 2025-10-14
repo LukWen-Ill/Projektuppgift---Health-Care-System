@@ -49,24 +49,24 @@ class User
     {//       Interpolation transform any datatype to string.
         return $"{UserID},{Username},{Password},{UserRole},{AssignedLocation},{AssignedRegion}";
     }
-    public User FromCsv(string user)
+    public static User FromCsv(string string_of_users)
     {
-        string[] var = user.Split(','); // saves each varible in string array.
+        string[] col = string_of_users.Split(','); // saves each varible in string array.
 
         // check for correct data handling.
-        if (var.Length != 6)
+        if (col.Length != 6)
         {
             return null;
         }
 
         // parse string to int.
-        int.TryParse(var[0], out int userID);
+        int.TryParse(col[0], out int userID);
 
         // parse string to enum
-        Role role = (Role)Enum.Parse(typeof(Role), var[3]);
-        Location location = (Location)Enum.Parse(typeof(Location), var[4]);
-        Region region = (Region)Enum.Parse(typeof(Region), var[5]);
+        Role role = (Role)Enum.Parse(typeof(Role), col[3]);
+        Location location = (Location)Enum.Parse(typeof(Location), col[4]);
+        Region region = (Region)Enum.Parse(typeof(Region), col[5]);
 
-        return new User(userID, var[1], var[2], role, location, region);
+        return new User(userID, col[1], col[2], role, location, region);
     }
 }
