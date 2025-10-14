@@ -18,9 +18,10 @@ public class Role //detta är en klass som rapresenterar en roll på systemet, "
 {
     public string name;// namn på rollen ("patient, "Dr." eller "Ptient")
     public List<Permission> permissions;// vi skapar en lista med alla rättigheter som denna roll har. För exampel, en Admin kan ha Addlokation, Handle permission etc..
-
+    // Här skapar vi en Konstrukt (som körs när man skapar en nytt objekt av typen Roll.)
+    //Den tar in rollens namn och skapar en tom lista för Permissions.
     public Role(string roleName)
     {
-        n
+        name = roleName; //ska spara rollensname i variabeln `name`.
     }
 }
