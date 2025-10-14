@@ -17,17 +17,17 @@ class User
     public Region AssignedRegion;
 
     //  Constructor
-    public User(string username, string password)
+    public User(int userID, string username, string password, Role userRole, Location assignedLocation, Region assignedRegion)
     // When a new User is created the variables taken in are UserID, Username, Password.
     {
-        UserID = 1; // DEV hardcoded until function SetID() done
+        UserID = userID;
         Username = username;
         Password = password;
-        UserRole = Role.User;                   // User default get role User.
-        AssignedLocation = Location.Hospital;   // Hardcoded location to Hospital.
-        AssignedRegion = Region.Region;         // Hardcode Region
-
+        UserRole = userRole;
+        AssignedLocation = assignedLocation;
+        AssignedRegion = assignedRegion;
     }
+
 
     public enum Location // Locations can be added
     {
@@ -44,5 +44,29 @@ class User
         Admin,
         Staff,
         Patient,
+    }
+    public string ToCsv()
+    {//       Interpolation transform any datatype to string.
+        return $"{UserID},{Username},{Password},{UserRole},{AssignedLocation},{AssignedRegion}";
+    }
+    public User FromCsv(string user)
+    {
+        string[] var = user.Split(','); // saves each varible in string array.
+
+        // check for correct data handling.
+        if (var.Length != 6)
+        {
+            return null;
+        }
+
+        // parse string to int.
+        int.TryParse(var[0], out int userID);
+
+        // parse string to enum
+        Role role = (Role)Enum.Parse(typeof(Role), var[3]);
+        Location location = (Location)Enum.Parse(typeof(Location), var[4]);
+        Region region = (Region)Enum.Parse(typeof(Region), var[5]);
+
+        return new User(userID, var[1], var[2], role, location, region);
     }
 }
