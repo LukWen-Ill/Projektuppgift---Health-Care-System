@@ -1,32 +1,12 @@
 ﻿using App;
 
-// creates a path from where this program is running
-string basePath = AppContext.BaseDirectory;
+// creates Users.csv
+string path_userCsv = FileHandler.GetDataPath("Users.csv");
 
-// creates file
-string dataFolder = Path.Combine(basePath, "Data");
-
-// checks if file was created
-Directory.CreateDirectory(dataFolder);
-
-// creates filepath to Users.csv
-string filePath = Path.Combine(dataFolder, "Users.csv");
-// BUG:
-// Ny fil skapad: / Users / lukaswennstrom / repos / Projektuppgift-- - Health - Care - System / bin / Debug / net8.0 / Data / Users.csv
-
-if (!File.Exists(filePath))
+// reads from Users.csv
+using StreamReader reader = new StreamReader(path_userCsv);
 {
-    File.WriteAllText(filePath, "");
-    Console.WriteLine($"Ny fil skapad: {filePath}");
-}
-else
-{
-    Console.WriteLine($"Filen finns redan: {filePath}");
-}
-
-using StreamReader reader = new StreamReader("Users.csv");
-{
-    string innehall = reader.ReadToEnd();
+    string fromcsvalistofusers = reader.ReadToEnd();
 }
 
 User testUser = new User(1, "Lukas", "1", User.Role.Admin, User.Location.Hospital, User.Region.Region);
