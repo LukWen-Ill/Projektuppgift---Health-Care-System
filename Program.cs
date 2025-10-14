@@ -1,5 +1,14 @@
 ﻿using App;
 
+// creates Users.csv
+string path_userCsv = FileHandler.GetDataPath("Users.csv");
+
+// reads from Users.csv
+using StreamReader reader = new StreamReader(path_userCsv);
+{
+    string fromcsvalistofusers = reader.ReadToEnd();
+}
+
 User testUser = new User(1, "Lukas", "1", User.Role.Admin, User.Location.Hospital, User.Region.Region);
 
 List<User> users = new List<User>();
@@ -25,8 +34,8 @@ while (true)
 
         if (!String.IsNullOrWhiteSpace(u_input) && !String.IsNullOrWhiteSpace(p_input)) // BEK av MAX
         {
-            User user = new User(Count.RegisterUser(userID_count), u_input, p_input, )User.Role.User;
-            users.Add(user);
+            // User user = new User(Count.RegisterUser(userID_count), u_input, p_input, )User.Role.User;
+            // users.Add(user);
             Console.WriteLine("user added");
         }
         else
