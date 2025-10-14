@@ -1,5 +1,6 @@
-1,Lukas,123,User,Hospital,Region
-2,emmanuel,1123,User,Hospital,Region
-3,Nils,123,User,Hospital,Region
-4,Mohammed,123,User,Hospital,Region
+1,User,123,User,Hospital,Region
+2,Admin,123,Admin,Hospital,Region
+3,Staff,123,Staff,Hospital,Region
+4,Patient,123,Patient,Hospital,Region
 5,Mohamed,123,User,Hospital,Region
+6,Lukas,123,User,Hospital,Region

@@ -50,64 +50,69 @@ User? active_user = null;
 
 while (true)
 {
-    Console.WriteLine("1. register");
-    Console.WriteLine("2. login");
-
-    string? input = Console.ReadLine();
-
-    if (active_user == null && input == "1")
+    if (active_user == null)
     {
-        bool is_viable = true;
-        Console.Write("enter username: ");
-        string? u_input = Console.ReadLine();
+        Console.WriteLine("1. register");
+        Console.WriteLine("2. login");
 
-        foreach (User user in users)
+        string? input = Console.ReadLine();
+
+        if (active_user == null && input == "1")
         {
-            if (user.Username == u_input)
+            bool is_viable = true;
+            Console.Write("enter username: ");
+            string? u_input = Console.ReadLine();
+
+            foreach (User user in users)
             {
-                Console.WriteLine($"Username: {u_input} is already in use.");
-
-                Console.WriteLine("press enter to continue..");
-                Console.ReadLine();
-
-                is_viable = false;
-                break;
-            }
-        }
-        if (is_viable)
-        {
-            Console.Write("enter password: ");
-            string? p_input = Console.ReadLine();
-
-            if (!String.IsNullOrWhiteSpace(u_input) && !String.IsNullOrWhiteSpace(p_input)) // BEK av MAX
-            {
+                if (user.Username == u_input)
                 {
-                    User user = new User(userID_count, u_input, p_input, User.Role.User, User.Location.Hospital, User.Region.Region);
-                    users.Add(user);
-                    Console.WriteLine("user added, ID: " + userID_count);
+                    Console.WriteLine($"Username: {u_input} is already in use.");
+
+                    Console.WriteLine("press enter to continue..");
+                    Console.ReadLine();
+
+                    is_viable = false;
+                    break;
                 }
-                // counter for UserID
-                userID_count++;
-                File.WriteAllText(path_countTxt, userID_count.ToString());
+            }
+            if (is_viable)
+            {
+                Console.Write("enter password: ");
+                string? p_input = Console.ReadLine();
 
-                // writes from list to Users.csv
-                using (StreamWriter writer = new StreamWriter(path_userCsv))
+                if (!String.IsNullOrWhiteSpace(u_input) && !String.IsNullOrWhiteSpace(p_input)) // BEK av MAX
                 {
-                    foreach (User user in users)
                     {
-                        writer.WriteLine(user.ToCsv());
+                        User user = new User(userID_count, u_input, p_input, User.Role.User, User.Location.Hospital, User.Region.Region);
+                        users.Add(user);
+                        Console.WriteLine("user added, ID: " + userID_count);
+                    }
+                    // counter for UserID
+                    userID_count++;
+                    File.WriteAllText(path_countTxt, userID_count.ToString());
+
+                    // writes from list to Users.csv
+                    using (StreamWriter writer = new StreamWriter(path_userCsv))
+                    {
+                        foreach (User user in users)
+                        {
+                            writer.WriteLine(user.ToCsv());
+                        }
                     }
                 }
-            }
-            else
-            {
-                Console.WriteLine("invalid input");
+                else
+                {
+                    Console.WriteLine("invalid input");
+                }
             }
         }
+
         if (active_user == null && input == "2")
         {
+
             Console.Write("enter username: ");
-            u_input = Console.ReadLine();
+            string? u_input = Console.ReadLine();
             Console.Write("enter password: ");
             string? p_input = Console.ReadLine();
 
@@ -125,8 +130,59 @@ while (true)
                 Console.WriteLine("login failed. Press Enter to continue");
                 Console.ReadLine();
             }
+        }
+    }
+    else if (active_user != null)
+    {
+        if (active_user.UserRole == User.Role.User)
+        {
+            // Features to DEV:
+            // As a user, I need to be able to request registration as a patient.
+            Console.WriteLine($"you are logged in as: {User.Role.User}");
+
+            Console.WriteLine($"\"logout\"");
+            if (Console.ReadLine() == "logout")
+            {
+                active_user = null;
+
+            }
+
 
         }
+        else if (active_user.UserRole == User.Role.Admin)
+        {
+            Console.WriteLine($"you are logged in as: {User.Role.Admin}");
+            Console.WriteLine($"\"logout\"");
+            if (Console.ReadLine() == "logout")
+            {
+                active_user = null;
 
+            }
+
+
+        }
+        else if (active_user.UserRole == User.Role.Staff)
+        {
+            Console.WriteLine($"you are logged in as: {User.Role.Staff}");
+
+            Console.WriteLine($"\"logout\"");
+            if (Console.ReadLine() == "logout")
+            {
+                active_user = null;
+
+            }
+        }
+        else if (active_user.UserRole == User.Role.Patient)
+        {
+            Console.WriteLine($"you are logged in as: {User.Role.Patient}");
+
+            Console.WriteLine($"\"logout\"");
+            if (Console.ReadLine() == "logout")
+            {
+                active_user = null;
+
+
+            }
+        }
     }
 }
