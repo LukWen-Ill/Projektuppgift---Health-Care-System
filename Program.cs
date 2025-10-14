@@ -5,6 +5,10 @@ string path_userCsv = FileHandler.GetDataPath("Users.csv");
 // creates Count.Txt.
 string path_countTxt = FileHandler.GetDataPath("Count.txt");
 
+// creates Events.csv.
+string path_EventLog = FileHandler.GetDataPath("Events.csv");
+
+
 // create hardcoded users.
 // User testUser = new User(1, "Lukas", "1", User.Role.Admin, User.Location.Hospital, User.Region.Region);
 // User testUser1 = new User(1, "Lukas", "1", User.Role.Admin, User.Location.Hospital, User.Region.Region);

@@ -13,4 +13,16 @@ class FileHandler
 
         return Path.Combine(programFolder, csv_filename);
     }
+
+
+    string path_EventLog = FileHandler.GetDataPath("EventLog.csv");
+    public static void log(int userId, User.Role role, EventType eventType, string target)
+    {
+
+    }
+    public enum EventType
+    {
+        UserLogin,
+        UserLogout,
+    }
 }
