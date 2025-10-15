@@ -6,136 +6,168 @@ namespace App;
 
 class RoleMenuService
 {
-    public static void ShowMenu(User user)
+    public static void ShowMenuOption(User user, Permission permission, int optionNumber, string text)
     {
-        switch (user.UserRole)
+        if (user.TryPermission(permission))
+            Console.WriteLine($"{optionNumber}) {text}");
+        else
+            Console.WriteLine($"{optionNumber}) Permission required...");
+    }
+    public static void ShowPermissionMenu(User activeUser)
+    {
+        bool running = true;
+
+        while (running)
         {
-            case Role.Admin:
-                Console.Write("permissions: ");
+            Console.WriteLine($"Logged in as {activeUser.UserRole}: {activeUser.Username}");
+            Console.WriteLine("Select an action:\n");
+            if (activeUser.UserRole == Role.Staff)
+            {
+                ShowMenuOption(activeUser, Permission.ViewPatientJournalEntries, 1, "View a patient's journal entries");
+                ShowMenuOption(activeUser, Permission.SetHiddenEntries, 2, "Mark journal entries as sensitive / non-sensitive");
+                ShowMenuOption(activeUser, Permission.RegisterAppointments, 3, "Register a new appointment");
+                ShowMenuOption(activeUser, Permission.ModifyAppointments, 4, "Modify an existing appointment");
+                ShowMenuOption(activeUser, Permission.ApproveAppointmentRequests, 5, "Approve appointment requests");
+                ShowMenuOption(activeUser, Permission.ViewLocationSchedule, 6, "View the schedule of a location");
 
-                Console.WriteLine("Handle the permission system, in fine granularity");
-                ShowMenu2(user);
-                break;
 
-            case Role.Staff:
-                ShowMenu2(user);
-                break;
+                Console.WriteLine("0) Logout");
+                Console.Write("\nSelect an option: ");
+                string? input = Console.ReadLine();
 
-            case Role.Patient:
-                ShowMenu2(user,);
-                break;
+                switch (input)
+                {
+                    case "1":
+                        // ViewPatientJournalEntries()
+                        Console.WriteLine("Viewing patient journals...");
+                        break;
+
+                    case "2":
+                        // MarkJournalEntrySensitivity()
+                        Console.WriteLine("Marking journal entry sensitivity...");
+                        break;
+
+                    case "3":
+                        // RegisterAppointments()
+                        Console.WriteLine("Registering a new appointment...");
+                        break;
+
+                    case "4":
+                        // ModifyAppointments()
+                        Console.WriteLine("Modifying an appointment...");
+                        break;
+
+                    case "5":
+                        // ApproveAppointmentRequests()
+                        Console.WriteLine("Approving appointment request...");
+                        break;
+
+                    case "6":
+                        // ViewLocationSchedule()
+                        Console.WriteLine("Viewing location schedule...");
+                        break;
+
+                    case "0":
+                        running = false;
+                        Console.WriteLine("Logging out...");
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid selection. Press Enter to continue.");
+                        Console.ReadLine();
+                        break;
+                }
+            }
+            else if (activeUser.UserRole == Role.Admin)
+            {
+                running = true;
+
+                while (running)
+                {
+
+                    ShowMenuOption(activeUser, Permission.HandlePermissionSystem, 1, "Handle the permission system (fine granularity)");
+                    ShowMenuOption(activeUser, Permission.AssignAdminsToRegions, 2, "Assign admins to certain regions");
+                    ShowMenuOption(activeUser, Permission.HandleRegistrations, 3, "Handle registrations");
+                    ShowMenuOption(activeUser, Permission.AddLocations, 4, "Add new locations");
+                    ShowMenuOption(activeUser, Permission.CreatePersonnelAccounts, 5, "Create accounts for personnel");
+                    ShowMenuOption(activeUser, Permission.ViewPermissionOverview, 6, "View who has permission to what");
+                    ShowMenuOption(activeUser, Permission.AcceptPatientRegistrations, 7, "Accept user registration as patients");
+                    ShowMenuOption(activeUser, Permission.DenyPatientRegistrations, 8, "Deny user registration as patients");
+
+                    Console.WriteLine("0) Logout");
+
+                    Console.Write("\nSelect an option: ");
+                    var input = Console.ReadLine();
+
+                    switch (input)
+                    {
+                        case "1":
+                            Console.WriteLine("Opening Permission System...");
+                            // PermissionManager.ManagePermissions(activeUser);
+                            break;
+
+                        case "2":
+                            Console.WriteLine("Assigning Admins to Regions...");
+                            // RegionManager.AssignAdminToRegion(activeUser);
+                            break;
+
+                        case "3":
+                            Console.WriteLine("Handling Registrations...");
+                            // RegistrationManager.HandleRegistrations(activeUser);
+                            break;
+
+                        case "4":
+                            Console.WriteLine("Adding new Location...");
+                            // LocationManager.AddLocation(activeUser);
+                            break;
+
+                        case "5":
+                            Console.WriteLine("Creating Personnel Account...");
+                            // PersonnelManager.CreatePersonnel(activeUser);
+                            break;
+
+                        case "6":
+                            Console.WriteLine("Viewing Permission Overview...");
+                            // PermissionViewer.ShowOverview(activeUser);
+                            break;
+
+                        case "7":
+                            Console.WriteLine("Accepting Patient Registration...");
+                            // RegistrationManager.AcceptRegistration(activeUser);
+                            break;
+
+                        case "8":
+                            Console.WriteLine("Denying Patient Registration...");
+                            // RegistrationManager.DenyRegistration(activeUser);
+                            break;
+
+                        case "0":
+                            running = false;
+                            Console.WriteLine("Logging out...");
+                            break;
+
+                        default:
+                            Console.WriteLine("Invalid selection. Press Enter to continue.");
+                            Console.ReadLine();
+                            break;
+                    }
+
+                    if (running)
+                    {
+                        Console.WriteLine("\nPress Enter to continue...");
+                        Console.ReadLine();
+                    }
+                }
+            }
+            else if (activeUser.UserRole == Role.Patient)
+            {
+
+            }
+            if (running)
+            {
+                Console.WriteLine("\nPress Enter to continue...");
+                Console.ReadLine();
+            }
         }
     }
-
-    public static void ShowMenu2(User admin,)
-    {
-        Console.Clear();
-        Console.WriteLine($"You are logged in as {admin.Username} ({User.Role.Admin})");
-        Console.WriteLine("=== Admin Menu ===");
-        Console.WriteLine("1) View all users");
-        Console.WriteLine("2) Approve patient registrations");
-        Console.WriteLine("3) Create staff account");
-        Console.WriteLine("4) Logout");
-        Console.Write("Select an option: ");
-        var input = Console.ReadLine();
-
-        switch (input)
-        {
-            case "1":
-                foreach (var user in users)
-                    Console.WriteLine($"- {user.Id}: {user.Username} ({user.UserRole})");
-                break;
-            case "2":
-                Console.WriteLine("Approving patient registrations...");
-                break;
-            case "3":
-                Console.WriteLine("Creating staff account...");
-                break;
-            case "4":
-                EventLog.Eventlogger(admin, EventLog.EventType.UserLogout);
-                Program.active_user = null;
-                return;
-            default:
-                Console.WriteLine("Invalid option");
-                break;
-        }
-        Pause();
-    }
-
-    private void ShowStaffMenu(User staff)
-    {
-        Console.Clear();
-        Console.WriteLine($"You are logged in as {staff.Username} ({User.Role.Staff})");
-        Console.WriteLine("=== Staff Menu ===");
-        Console.WriteLine("1) View Patient Journal");
-        Console.WriteLine("2) Register appointment");
-        Console.WriteLine("3) View schedule");
-        Console.WriteLine("4) Logout");
-        Console.Write("Select an option: ");
-        var input = Console.ReadLine();
-
-        switch (input)
-        {
-            case "1": Console.WriteLine("Opening patient journal..."); break;
-            case "2": Console.WriteLine("Registering appointment..."); break;
-            case "3": Console.WriteLine("Showing schedule..."); break;
-            case "4":
-                EventLog.Eventlogger(staff, EventLog.EventType.UserLogout);
-                Program.active_user = null;
-                return;
-        }
-        Pause();
-    }
-
-    private void ShowUserMenu(User user)
-    {
-        Console.Clear();
-        Console.WriteLine($"You are logged in as {user.Username} ({User.Role.User})");
-        Console.WriteLine("=== User Menu ===");
-        Console.WriteLine("1) Request patient registration");
-        Console.WriteLine("2) Logout");
-        var input = Console.ReadLine();
-
-        switch (input)
-        {
-            case "1":
-                Console.WriteLine("Registration request sent...");
-                EventLog.Eventlogger(user, EventLog.EventType.RegistrationRequested);
-                break;
-            case "2":
-                EventLog.Eventlogger(user, EventLog.EventType.UserLogout);
-                Program.active_user = null;
-                return;
-        }
-        Pause();
-    }
-
-    private void ShowPatientMenu(User patient)
-    {
-        Console.Clear();
-        Console.WriteLine($"You are logged in as {patient.Username} ({User.Role.Patient})");
-        Console.WriteLine("=== Patient Menu ===");
-        Console.WriteLine("1) View Appointments");
-        Console.WriteLine("2) Logout");
-        var input = Console.ReadLine();
-
-        switch (input)
-        {
-            case "1":
-                Console.WriteLine("Listing your appointments...");
-                break;
-            case "2":
-                EventLog.Eventlogger(patient, EventLog.EventType.UserLogout);
-                Program.active_user = null;
-                return;
-        }
-        Pause();
-    }
-
-    private void Pause()
-    {
-        Console.WriteLine("Press Enter to continue...");
-        Console.ReadLine();
-    }
-}
 }
