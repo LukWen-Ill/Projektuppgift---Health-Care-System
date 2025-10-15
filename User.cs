@@ -28,55 +28,8 @@ class User
         AssignedLocation = assignedLocation;
         AssignedRegion = assignedRegion;
     }
-    public enum UserPermissions
-    {
-        UserLogin,
-        ViewSchedule,
-    }
-    public enum PatientPermissions
-    {
-        ViewJournal,
-        RequestAppointment,
-    }
-    public enum StaffPermissions
-    {
-        ViewPatientJournalEntries,      // View a patient's journal entries
-        SetHiddenEntries,           // Mark journal entries with IsSensitive = true/false
-        ViewHiddenEntries,           // Can view entries marked as sensitive
-        RegisterAppointments,           // Register appointments
-        ModifyAppointments,             // Modify appointments
-        ApproveAppointmentRequests,     // Approve appointment requests
-        ViewLocationSchedule,           // View the schedule of a location
-    }
-    public enum AdminPermissions
-    {
-        AcceptPatientRegistrations,     // Accept user registration as patients
-        DenyPatientRegistrations,       // Deny user registration as patients
-        HandleRegistrations,            // Handle registrations
-        CreatePersonnelAccounts,        // Create accounts for personnel
-        AddLocations,                   // Add locations
-        AssignAdminsToRegions,          // Assign admins to certain regions
-        ViewPermissionOverview,         // View a list of who has permission to what
-        HandlePermissionSystem,         // Handle the permission system, in fine granularity
-    }
 
 
-    public enum Location // Locations can be added // will be list in future
-    {
-        Hospital,
-    }
-    public enum Region
-    {
-        Region,
-    }
-
-    public enum Role // Set list of Roles.
-    {
-        User,
-        Admin,
-        Staff,
-        Patient,
-    }
     public string ToCsv()
     {//       Interpolation transform any datatype to string.
         return $"{UserID},{Username},{Password},{UserRole},{AssignedLocation},{AssignedRegion}";
@@ -101,4 +54,63 @@ class User
 
         return new User(userID, col[1], col[2], role, location, region);
     }
+    public bool TryPermission(Permission permission)
+    {
+        bool result = false;
+        foreach (Permission p in Permissions)
+        {
+            if (p == permission)
+            {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+}
+
+enum Permission
+{
+    // UserPermissions
+    UserLogin,
+    ViewSchedule,
+
+    // PatientPermissions
+    ViewJournal,
+    RequestAppointment,
+
+    // StaffPermissions
+    ViewPatientJournalEntries,      // View a patient's journal entries
+    SetHiddenEntries,               // Mark journal entries with IsSensitive = true/false
+    ViewHiddenEntries,              // Can view entries marked as sensitive
+    RegisterAppointments,           // Register appointments
+    ModifyAppointments,             // Modify appointments
+    ApproveAppointmentRequests,     // Approve appointment requests
+    ViewLocationSchedule,           // View the schedule of a location
+
+    // AdminPermissions
+    AcceptPatientRegistrations,     // Accept user registration as patients
+    DenyPatientRegistrations,       // Deny user registration as patients
+    HandleRegistrations,            // Handle registrations
+    CreatePersonnelAccounts,        // Create accounts for personnel
+    AddLocations,                   // Add locations
+    AssignAdminsToRegions,          // Assign admins to certain regions
+    ViewPermissionOverview,         // View a list of who has permission to what
+    HandlePermissionSystem,         // Handle the permission system, in fine granularity
+}
+enum Location // Locations can be added // will be list in future
+{
+    Hospital,
+}
+enum Region
+{
+    Region,
+}
+
+enum Role // Set list of Roles.
+{
+    User,
+    Admin,
+    Staff,
+    Patient,
 }
