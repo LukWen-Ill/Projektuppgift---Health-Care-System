@@ -15,10 +15,11 @@ class User
     public Role UserRole;
     public Location AssignedLocation;
     public Region AssignedRegion;
+    public List<Permission> Permissions;
 
     //  Constructor
-    public User(int userID, string username, string password, Role userRole, Location assignedLocation, Region assignedRegion)
-    // When a new User is created the variables taken in are UserID, Username, Password.
+    public User(int userID, string username, string password, Role userRole, Location assignedLocation, Region assignedRegion, List<Permission> permissions)
+    // When a new User is created the variables taken in are UserID, Username, Password
     {
         UserID = userID;
         Username = username;
@@ -26,6 +27,7 @@ class User
         UserRole = userRole;
         AssignedLocation = assignedLocation;
         AssignedRegion = assignedRegion;
+        Permissions = permissions;
     }
 
 

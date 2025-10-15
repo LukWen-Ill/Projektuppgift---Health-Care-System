@@ -21,6 +21,7 @@ string path_EventLog = FileHandler.GetDataPath("Events.csv");
 // two hardcoded user lists
 // List<User> testUsers = new() { testUser1, testUser2, testUser3, testUser4, testUser5 };
 List<User> users = new List<User>();
+List<Permission> default_permissions = new List<Permission>();
 // users.Add(testUser);
 //
 
@@ -87,11 +88,11 @@ while (true)
                 Console.Write("enter password: ");
                 string? p_input = Console.ReadLine();
 
-                if (!String.IsNullOrWhiteSpace(u_input) && !String.IsNullOrWhiteSpace(p_input)) // BEK av MAX
+                if (!String.IsNullOrWhiteSpace(u_input) && !String.IsNullOrWhiteSpace(p_input)) // Godkänd av MAX
                 {
                     {
 
-                        User user = new User(userID_count, u_input, p_input, User.Role.User, User.Location.Hospital, User.Region.Region);
+                        User user = new User(userID_count, u_input, p_input, User.Role.User, User.Location.Hospital, User.Region.Region, default_permissions);
                         users.Add(user);
                         EventLog.Eventlogger(active_user, EventLog.EventType.RegistrationRequested);
                         Console.WriteLine("user added, ID: " + userID_count);
