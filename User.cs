@@ -67,6 +67,13 @@ class User
         }
         return result;
     }
+    public void ShowPermission()
+    {
+        for (int i = 0; i < Permissions.Count; ++i)
+        {
+            Console.Write($"{Permissions[i]}, ");
+        }
+    }
 }
 
 enum Permission
