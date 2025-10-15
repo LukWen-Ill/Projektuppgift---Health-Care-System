@@ -5,12 +5,12 @@ class EventLog
 
     public DateTime Timestamp;
     public int UserID;
-    public User.Role Role;
+    public Role Role;
     public EventType Category;
     public int Target;
     public string? Description;
 
-    public EventLog(DateTime timestamp, int userId, User.Role role, EventType category, int target, string? description)
+    public EventLog(DateTime timestamp, int userId, Role role, EventType category, int target, string? description)
     {
         Timestamp = timestamp;
         UserID = userId;
@@ -20,38 +20,7 @@ class EventLog
         Description = string.IsNullOrWhiteSpace(description) ? "No description" : description; // no description is set, this will set defaulted
     }
 
-    public enum EventType
-    {
-        // authentication
-        UserLogin,
-        UserLogout,
 
-        // permissions 
-        PermissionModified,
-        PermissionViewed,
-        AdminAssignedToRegion,
-
-        // registration
-        RegistrationRequested,
-        RegistrationAccepted,
-        RegistrationDenied,
-        PersonnelAccountCreated,
-
-        // location 
-        LocationAdded,
-        RegionAssigned,
-
-        // journal
-        JournalViewed,
-        JournalMarkedSensitive,
-        JournalEntryCreated,
-
-        // appointment & schedule
-        AppointmentRegistered,
-        AppointmentModified,
-        AppointmentApproved,
-        ScheduleViewed
-    }
 
 
     public string ToCsv()
@@ -76,7 +45,7 @@ class EventLog
 
 
         // parsing to enum
-        User.Role role = (User.Role)Enum.Parse(typeof(User.Role), col[3]);
+        Role role = (Role)Enum.Parse(typeof(Role), col[3]);
         EventType eventType = (EventType)Enum.Parse(typeof(EventType), col[4]);
 
 
@@ -84,7 +53,7 @@ class EventLog
     }
     // DateTime.Now
 
-    public static void Eventlogger(User user, EventType type)
+    public static void Eventlogger(User user, EventType type) // DEV: how do we log target?
     {
         if (type == EventType.UserLogin)
             FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} logged in"));
@@ -142,7 +111,36 @@ class EventLog
     }
 
 
+}
+public enum EventType
+{
+    // authentication
+    UserLogin,
+    UserLogout,
 
+    // permissions 
+    PermissionModified,
+    PermissionViewed,
+    AdminAssignedToRegion,
 
+    // registration
+    RegistrationRequested,
+    RegistrationAccepted,
+    RegistrationDenied,
+    PersonnelAccountCreated,
 
+    // location 
+    LocationAdded,
+    RegionAssigned,
+
+    // journal
+    JournalViewed,
+    JournalMarkedSensitive,
+    JournalEntryCreated,
+
+    // appointment & schedule
+    AppointmentRegistered,
+    AppointmentModified,
+    AppointmentApproved,
+    ScheduleViewed
 }
