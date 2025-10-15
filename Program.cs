@@ -1,4 +1,5 @@
-﻿using App;
+﻿using System.Security;
+using App;
 
 // creates Users.csv.
 string path_userCsv = FileHandler.GetDataPath("Users.csv");
@@ -21,7 +22,6 @@ string path_EventLog = FileHandler.GetDataPath("Events.csv");
 // two hardcoded user lists
 // List<User> testUsers = new() { testUser1, testUser2, testUser3, testUser4, testUser5 };
 List<User> users = new List<User>();
-List<Permission> default_permissions = new List<Permission>();
 // users.Add(testUser);
 //
 
@@ -64,7 +64,7 @@ while (true)
         string? input = Console.ReadLine();
 
         // Register
-        if (active_user == null && input == "1")
+        if (input == "1")
         {
             bool is_viable = true;
             Console.Write("enter username: ");
@@ -92,9 +92,9 @@ while (true)
                 {
                     {
 
-                        User user = new User(userID_count, u_input, p_input, User.Role.User, User.Location.Hospital, User.Region.Region, default_permissions);
+                        User user = new User(userID_count, u_input, p_input, Role.User, Location.Hospital, Region.Region);
                         users.Add(user);
-                        EventLog.Eventlogger(active_user, EventLog.EventType.RegistrationRequested);
+                        EventLog.Eventlogger(active_user, EventType.RegistrationRequested);
                         Console.WriteLine("user added, ID: " + userID_count);
                     }
                     // counter for UserID
@@ -118,7 +118,7 @@ while (true)
         }
 
         // Login
-        if (active_user == null && input == "2")
+        if (input == "2")
         {
 
             Console.Write("enter username: ");
@@ -128,12 +128,15 @@ while (true)
 
             foreach (User user in users)
             {
-                if (u_input == user.Username && p_input == user.Password)
+                if (u_input == user.Username && p_input == user.Password && user.TryPermission(Permission.UserLogin))
                 {
+
                     active_user = user;
-                    EventLog.Eventlogger(active_user, EventLog.EventType.UserLogin);
+                    EventLog.Eventlogger(active_user, EventType.UserLogin);
                     Console.WriteLine("login sucessful");
+
                     break;
+
                 }
             }
             if (active_user == null)
@@ -147,26 +150,20 @@ while (true)
     // Logged in
     else if (active_user != null)
     {
-        if (active_user.UserRole == User.Role.User)
+        if (active_user.UserRole == Role.User)
         {
             // Features to DEV:
             // As a user, I need to be able to request registration as a patient.
-            Console.WriteLine($"you are logged in as: {User.Role.User}");
-
-            Console.WriteLine($"\"logout\"");
-            if (Console.ReadLine() == "logout")
-            {
-                EventLog.Eventlogger(active_user, EventLog.EventType.UserLogout);
-                active_user = null;
-            }
 
 
         }
-        else if (active_user.UserRole == User.Role.Admin)
+        else if (active_user.UserRole == Role.Admin)
         {
-            Console.WriteLine($"you are logged in as: {User.Role.Admin}");
+            Console.WriteLine($"you are logged in as: {Role.Admin}");
 
-            // Handle the permission system, in fine granularity
+            Console.WriteLine("Handle the permission system, in fine granularity");
+
+
             // Assign admins to certain regions
             // Handle registrations
             // Add locations
@@ -177,9 +174,9 @@ while (true)
 
 
         }
-        else if (active_user.UserRole == User.Role.Staff)
+        else if (active_user.UserRole == Role.Staff)
         {
-            Console.WriteLine($"you are logged in as: {User.Role.Staff}");
+            Console.WriteLine($"you are logged in as: {Role.Staff}");
 
             // View a patient's journal entries
             // Mark journal entries with levels of read permissions(Each journal entry has a simple boolean — for example IsSensitive = true / false.
@@ -196,9 +193,9 @@ while (true)
 
             }
         }
-        else if (active_user.UserRole == User.Role.Patient)
+        else if (active_user.UserRole == Role.Patient)
         {
-            Console.WriteLine($"you are logged in as: {User.Role.Patient}");
+            Console.WriteLine($"you are logged in as: {Role.Patient}");
 
             Console.WriteLine($"\"logout\"");
             if (Console.ReadLine() == "logout")
