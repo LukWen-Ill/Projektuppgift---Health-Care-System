@@ -52,6 +52,7 @@ using (StreamWriter writer = new StreamWriter(path_userCsv))
 
 User? active_user = null;
 
+
 while (true)
 {
     if (active_user == null)
@@ -88,8 +89,10 @@ while (true)
                 if (!String.IsNullOrWhiteSpace(u_input) && !String.IsNullOrWhiteSpace(p_input)) // BEK av MAX
                 {
                     {
+
                         User user = new User(userID_count, u_input, p_input, User.Role.User, User.Location.Hospital, User.Region.Region);
                         users.Add(user);
+                        EventLog.Eventlogger(active_user, EventLog.EventType.RegistrationRequested);
                         Console.WriteLine("user added, ID: " + userID_count);
                     }
                     // counter for UserID
@@ -125,6 +128,7 @@ while (true)
                 if (u_input == user.Username && p_input == user.Password)
                 {
                     active_user = user;
+                    EventLog.Eventlogger(active_user, EventLog.EventType.UserLogin);
                     Console.WriteLine("login sucessful");
                     break;
                 }
@@ -147,8 +151,8 @@ while (true)
             Console.WriteLine($"\"logout\"");
             if (Console.ReadLine() == "logout")
             {
+                EventLog.Eventlogger(active_user, EventLog.EventType.UserLogout);
                 active_user = null;
-
             }
 
 

@@ -15,14 +15,10 @@ class FileHandler
     }
 
 
-    string path_EventLog = FileHandler.GetDataPath("EventLog.csv");
-    public static void log(int userId, User.Role role, EventType eventType, string target)
+    public static void LogEvent(EventLog log)
     {
-
-    }
-    public enum EventType
-    {
-        UserLogin,
-        UserLogout,
+        string path_EventLog = FileHandler.GetDataPath("EventLog.csv");
+        string csv = log.ToCsv() + Environment.NewLine;
+        File.AppendAllText(path_EventLog, csv);
     }
 }

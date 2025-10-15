@@ -22,9 +22,37 @@ class EventLog
 
     public enum EventType
     {
+        // authentication
         UserLogin,
         UserLogout,
+
+        // permissions 
+        PermissionModified,
+        PermissionViewed,
+        AdminAssignedToRegion,
+
+        // registration
+        RegistrationRequested,
+        RegistrationAccepted,
+        RegistrationDenied,
+        PersonnelAccountCreated,
+
+        // location 
+        LocationAdded,
+        RegionAssigned,
+
+        // journal
+        JournalViewed,
+        JournalMarkedSensitive,
+        JournalEntryCreated,
+
+        // appointment & schedule
+        AppointmentRegistered,
+        AppointmentModified,
+        AppointmentApproved,
+        ScheduleViewed
     }
+
 
     public string ToCsv()
     {
@@ -55,5 +83,66 @@ class EventLog
         return new EventLog(timestamp, userID, role, eventType, targetID, col[5]);
     }
     // DateTime.Now
+
+    public static void Eventlogger(User user, EventLog.EventType type)
+    {
+        if (type == EventType.UserLogin)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} logged in"));
+
+        else if (type == EventType.UserLogout)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} logged out"));
+
+        else if (type == EventType.PermissionModified)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} modified permissions"));
+
+        else if (type == EventType.PermissionViewed)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} viewed permissions"));
+
+        else if (type == EventType.AdminAssignedToRegion)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} assigned admin to region"));
+
+        else if (type == EventType.RegistrationRequested)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} requested registration"));
+
+        else if (type == EventType.RegistrationAccepted)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} accepted registration"));
+
+        else if (type == EventType.RegistrationDenied)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} denied registration"));
+
+        else if (type == EventType.PersonnelAccountCreated)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} created a personnel account"));
+
+        else if (type == EventType.LocationAdded)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} added a location"));
+
+        else if (type == EventType.RegionAssigned)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} assigned a region"));
+
+        else if (type == EventType.JournalViewed)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} viewed a journal"));
+
+        else if (type == EventType.JournalMarkedSensitive)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} marked a journal sensitive"));
+
+        else if (type == EventType.JournalEntryCreated)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} created a journal entry"));
+
+        else if (type == EventType.AppointmentRegistered)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} registered an appointment"));
+
+        else if (type == EventType.AppointmentModified)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} modified an appointment"));
+
+        else if (type == EventType.AppointmentApproved)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} approved an appointment"));
+
+        else if (type == EventType.ScheduleViewed)
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} viewed a schedule"));
+    }
+
+
+
+
 
 }
