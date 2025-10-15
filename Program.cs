@@ -21,7 +21,6 @@ string path_EventLog = FileHandler.GetDataPath("Events.csv");
 // two hardcoded user lists
 // List<User> testUsers = new() { testUser1, testUser2, testUser3, testUser4, testUser5 };
 List<User> users = new List<User>();
-List<Permission> default_permissions = new List<Permission>();
 // users.Add(testUser);
 //
 
@@ -92,7 +91,7 @@ while (true)
                 {
                     {
 
-                        User user = new User(userID_count, u_input, p_input, User.Role.User, User.Location.Hospital, User.Region.Region, default_permissions);
+                        User user = new User(userID_count, u_input, p_input, User.Role.User, User.Location.Hospital, User.Region.Region);
                         users.Add(user);
                         EventLog.Eventlogger(active_user, EventLog.EventType.RegistrationRequested);
                         Console.WriteLine("user added, ID: " + userID_count);

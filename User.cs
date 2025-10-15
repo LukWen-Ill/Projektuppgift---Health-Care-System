@@ -15,10 +15,10 @@ class User
     public Role UserRole;
     public Location AssignedLocation;
     public Region AssignedRegion;
-    public List<Permission> Permissions;
+    public List<Permission> Permissions = new List<Permission>(); // creates a empty list of permissions when user is created.
 
     //  Constructor
-    public User(int userID, string username, string password, Role userRole, Location assignedLocation, Region assignedRegion, List<Permission> permissions)
+    public User(int userID, string username, string password, Role userRole, Location assignedLocation, Region assignedRegion)
     // When a new User is created the variables taken in are UserID, Username, Password
     {
         UserID = userID;
@@ -27,17 +27,47 @@ class User
         UserRole = userRole;
         AssignedLocation = assignedLocation;
         AssignedRegion = assignedRegion;
-        Permissions = permissions;
+    }
+    public enum UserPermissions
+    {
+        UserLogin,
+        ViewSchedule,
+    }
+    public enum PatientPermissions
+    {
+        ViewJournal,
+        RequestAppointment,
+    }
+    public enum StaffPermissions
+    {
+        ViewPatientJournalEntries,      // View a patient's journal entries
+        SetHiddenEntries,           // Mark journal entries with IsSensitive = true/false
+        ViewHiddenEntries,           // Can view entries marked as sensitive
+        RegisterAppointments,           // Register appointments
+        ModifyAppointments,             // Modify appointments
+        ApproveAppointmentRequests,     // Approve appointment requests
+        ViewLocationSchedule,           // View the schedule of a location
+    }
+    public enum AdminPermissions
+    {
+        AcceptPatientRegistrations,     // Accept user registration as patients
+        DenyPatientRegistrations,       // Deny user registration as patients
+        HandleRegistrations,            // Handle registrations
+        CreatePersonnelAccounts,        // Create accounts for personnel
+        AddLocations,                   // Add locations
+        AssignAdminsToRegions,          // Assign admins to certain regions
+        ViewPermissionOverview,         // View a list of who has permission to what
+        HandlePermissionSystem,         // Handle the permission system, in fine granularity
     }
 
 
     public enum Location // Locations can be added // will be list in future
     {
-        Hospital = 1,
+        Hospital,
     }
-    public enum Region // Locations can be added // will be list in future
+    public enum Region
     {
-        Region = 1,
+        Region,
     }
 
     public enum Role // Set list of Roles.
