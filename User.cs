@@ -29,11 +29,11 @@ class User
     }
 
 
-    public enum Location // Locations can be added
+    public enum Location // Locations can be added // will be list in future
     {
         Hospital = 1,
     }
-    public enum Region // Locations can be added
+    public enum Region // Locations can be added // will be list in future
     {
         Region = 1,
     }

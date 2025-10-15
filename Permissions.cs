@@ -10,7 +10,6 @@ public enum StaffPermission
     ViewPatientJournalEntries = 1,  // View a patient's journal entries
     MarkSensitiveEntries,           // Mark journal entries with IsSensitive = true/false
     ViewSensitiveEntries,           // Can view entries marked as sensitive
-
     RegisterAppointments,           // Register appointments
     ModifyAppointments,             // Modify appointments
     ApproveAppointmentRequests,     // Approve appointment requests

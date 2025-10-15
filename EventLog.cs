@@ -84,7 +84,7 @@ class EventLog
     }
     // DateTime.Now
 
-    public static void Eventlogger(User user, EventLog.EventType type)
+    public static void Eventlogger(User user, EventType type)
     {
         if (type == EventType.UserLogin)
             FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} logged in"));

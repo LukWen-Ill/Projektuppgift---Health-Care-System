@@ -62,6 +62,7 @@ while (true)
 
         string? input = Console.ReadLine();
 
+        // Register
         if (active_user == null && input == "1")
         {
             bool is_viable = true;
@@ -115,6 +116,7 @@ while (true)
             }
         }
 
+        // Login
         if (active_user == null && input == "2")
         {
 
@@ -140,6 +142,8 @@ while (true)
             }
         }
     }
+
+    // Logged in
     else if (active_user != null)
     {
         if (active_user.UserRole == User.Role.User)
@@ -160,18 +164,29 @@ while (true)
         else if (active_user.UserRole == User.Role.Admin)
         {
             Console.WriteLine($"you are logged in as: {User.Role.Admin}");
-            Console.WriteLine($"\"logout\"");
-            if (Console.ReadLine() == "logout")
-            {
-                active_user = null;
 
-            }
+            // Handle the permission system, in fine granularity
+            // Assign admins to certain regions
+            // Handle registrations
+            // Add locations
+            // Create accounts for personnel
+            // View a list of who has permission to what
+            // Accept user registration as patients
+            // Deny user registration as patients
 
 
         }
         else if (active_user.UserRole == User.Role.Staff)
         {
             Console.WriteLine($"you are logged in as: {User.Role.Staff}");
+
+            // View a patient's journal entries
+            // Mark journal entries with levels of read permissions(Each journal entry has a simple boolean — for example IsSensitive = true / false.
+            // Personnel either have CanViewSensitive = true / false)
+            // Register appointments
+            // Modify appointments
+            // Approve appointment requests
+            // View the schedule of a location
 
             Console.WriteLine($"\"logout\"");
             if (Console.ReadLine() == "logout")
