@@ -13,4 +13,12 @@ class FileHandler
 
         return Path.Combine(programFolder, csv_filename);
     }
+
+
+    public static void LogEvent(EventLog log)
+    {
+        string path_EventLog = FileHandler.GetDataPath("EventLog.csv");
+        string csv = log.ToCsv() + Environment.NewLine;
+        File.AppendAllText(path_EventLog, csv);
+    }
 }
