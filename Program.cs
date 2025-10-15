@@ -94,7 +94,7 @@ while (true)
 
                         User user = new User(userID_count, u_input, p_input, Role.User, Location.Hospital, Region.Region);
                         users.Add(user);
-                        EventLog.Eventlogger(active_user, EventType.RegistrationRequested);
+                        EventLog.Eventlogger(user, EventType.RegistrationRequested);
                         Console.WriteLine("user added, ID: " + userID_count);
                     }
                     // counter for UserID

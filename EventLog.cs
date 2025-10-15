@@ -56,10 +56,10 @@ class EventLog
     public static void Eventlogger(User user, EventType type) // DEV: how do we log target?
     {
         if (type == EventType.UserLogin)
-            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} logged in"));
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, user.UserID, $"{user.Username} logged in"));
 
         else if (type == EventType.UserLogout)
-            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} logged out"));
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, user.UserID, $"{user.Username} logged out"));
 
         else if (type == EventType.PermissionModified)
             FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} modified permissions"));
@@ -71,7 +71,7 @@ class EventLog
             FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} assigned admin to region"));
 
         else if (type == EventType.RegistrationRequested)
-            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} requested registration"));
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, user.UserID, $"{user.Username} requested registration"));
 
         else if (type == EventType.RegistrationAccepted)
             FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} accepted registration"));
@@ -89,7 +89,7 @@ class EventLog
             FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} assigned a region"));
 
         else if (type == EventType.JournalViewed)
-            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} viewed a journal"));
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, user.UserID, $"{user.Username} viewed a journal"));
 
         else if (type == EventType.JournalMarkedSensitive)
             FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} marked a journal sensitive"));
