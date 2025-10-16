@@ -6,24 +6,7 @@ string path_userCsv = FileHandler.GetDataPath("Users.csv");
 // creates Count.Txt.
 string path_countTxt = FileHandler.GetDataPath("Count.txt");
 
-// creates Events.csv.
-string path_EventLog = FileHandler.GetDataPath("Events.csv");
-
-
-// create hardcoded users.
-// User testUser = new User(1, "Lukas", "1", User.Role.Admin, User.Location.Hospital, User.Region.Region);
-// User testUser1 = new User(1, "Lukas", "1", User.Role.Admin, User.Location.Hospital, User.Region.Region);
-// User testUser2 = new User(2, "Anna", "2", User.Role.User, User.Location.Hospital, User.Region.Region);
-// User testUser3 = new User(3, "Erik", "3", User.Role.Staff, User.Location.Hospital, User.Region.Region);
-// User testUser4 = new User(4, "Maria", "4", User.Role.Patient, User.Location.Hospital, User.Region.Region);
-// User testUser5 = new User(5, "Oskar", "5", User.Role.User, User.Location.Hospital, User.Region.Region);
-//
-
-// two hardcoded user lists
-// List<User> testUsers = new() { testUser1, testUser2, testUser3, testUser4, testUser5 };
 List<User> users = new List<User>();
-// users.Add(testUser);
-//
 
 // gets count from Count.txt and converts to int.
 string s_userID_count = File.ReadAllText(path_countTxt);
@@ -47,7 +30,7 @@ using (StreamWriter writer = new StreamWriter(path_userCsv))
 {
     foreach (User user in users)
     {
-        writer.WriteLine(user.ToCsv());
+        writer.WriteLine($"{user.ToCsv()}");
     }
 }
 
@@ -94,7 +77,7 @@ while (true)
 
                         User user = new User(userID_count, u_input, p_input, Role.User, Location.Hospital, Region.Region);
                         users.Add(user);
-                        EventLog.Eventlogger(active_user, EventType.RegistrationRequested);
+                        EventLog.Eventlogger(user, EventType.RegistrationRequested);
                         Console.WriteLine("user added, ID: " + userID_count);
                     }
                     // counter for UserID
@@ -150,60 +133,19 @@ while (true)
     // Logged in
     else if (active_user != null)
     {
-        if (active_user.UserRole == Role.User)
+        switch (active_user.UserRole)
         {
-            // Features to DEV:
-            // As a user, I need to be able to request registration as a patient.
+            case Role.Admin:
+                RoleMenuService.ShowPermissionMenu(active_user);
+                break;
 
+            case Role.Staff:
+                RoleMenuService.ShowPermissionMenu(active_user);
+                break;
 
-        }
-        else if (active_user.UserRole == Role.Admin)
-        {
-            Console.WriteLine($"you are logged in as: {Role.Admin}");
-
-            Console.WriteLine("Handle the permission system, in fine granularity");
-
-
-            // Assign admins to certain regions
-            // Handle registrations
-            // Add locations
-            // Create accounts for personnel
-            // View a list of who has permission to what
-            // Accept user registration as patients
-            // Deny user registration as patients
-
-
-        }
-        else if (active_user.UserRole == Role.Staff)
-        {
-            Console.WriteLine($"you are logged in as: {Role.Staff}");
-
-            // View a patient's journal entries
-            // Mark journal entries with levels of read permissions(Each journal entry has a simple boolean — for example IsSensitive = true / false.
-            // Personnel either have CanViewSensitive = true / false)
-            // Register appointments
-            // Modify appointments
-            // Approve appointment requests
-            // View the schedule of a location
-
-            Console.WriteLine($"\"logout\"");
-            if (Console.ReadLine() == "logout")
-            {
-                active_user = null;
-
-            }
-        }
-        else if (active_user.UserRole == Role.Patient)
-        {
-            Console.WriteLine($"you are logged in as: {Role.Patient}");
-
-            Console.WriteLine($"\"logout\"");
-            if (Console.ReadLine() == "logout")
-            {
-                active_user = null;
-
-
-            }
+            case Role.Patient:
+                RoleMenuService.ShowPermissionMenu(active_user);
+                break;
         }
     }
 }
