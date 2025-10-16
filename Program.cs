@@ -30,7 +30,7 @@ using (StreamWriter writer = new StreamWriter(path_userCsv))
 {
     foreach (User user in users)
     {
-        writer.WriteLine($"{user.ToCsv()};{FileHandler.PermissionsToString(user.Permissions)}");
+        writer.WriteLine($"{user.ToCsv()}");
     }
 }
 

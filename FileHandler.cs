@@ -24,9 +24,11 @@ class FileHandler
     public static string PermissionsToString(List<Permission> list)
     {
         string permission_list = "";
-        for (int i = 0; i < list.Count - 1; ++i)
+        for (int i = 0; i < list.Count; ++i)
         {
-            permission_list += list[i].ToString() + ", ";
+            permission_list += list[i].ToString();
+            if (i < list.Count - 1)
+                permission_list += ", ";
         }
         return permission_list;
     }

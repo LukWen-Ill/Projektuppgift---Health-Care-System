@@ -91,7 +91,7 @@ class RoleMenuService
                 Console.WriteLine("0) Logout");
 
                 Console.Write("\nSelect an option: ");
-                var input = Console.ReadLine();
+                string? input = Console.ReadLine();
 
                 switch (input)
                 {
