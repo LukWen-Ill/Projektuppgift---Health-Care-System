@@ -97,42 +97,42 @@ class RoleMenuService
                 {
                     case "1":
                         Console.WriteLine("Opening Permission System...");
-                        // PermissionManager.ManagePermissions(activeUser);
+                        Permissions.ManagePermissions(activeUser);
                         break;
 
                     case "2":
                         Console.WriteLine("Assigning Admins to Regions...");
-                        // RegionManager.AssignAdminToRegion(activeUser);
+                        // Permissions.AssignAdminToRegion(activeUser);
                         break;
 
                     case "3":
                         Console.WriteLine("Handling Registrations...");
-                        // RegistrationManager.HandleRegistrations(activeUser);
+                        // Permissions.HandleRegistrations(activeUser);
                         break;
 
                     case "4":
                         Console.WriteLine("Adding new Location...");
-                        // LocationManager.AddLocation(activeUser);
+                        // Permissions.AddLocation(activeUser);
                         break;
 
                     case "5":
                         Console.WriteLine("Creating Personnel Account...");
-                        // PersonnelManager.CreatePersonnel(activeUser);
+                        // Permissions.CreatePersonnel(activeUser);
                         break;
 
                     case "6":
                         Console.WriteLine("Viewing Permission Overview...");
-                        // PermissionViewer.ShowOverview(activeUser);
+                        // Permissions.ShowOverview(activeUser);
                         break;
 
                     case "7":
                         Console.WriteLine("Accepting Patient Registration...");
-                        // RegistrationManager.AcceptRegistration(activeUser);
+                        // Permissions.AcceptRegistration(activeUser);
                         break;
 
                     case "8":
                         Console.WriteLine("Denying Patient Registration...");
-                        // RegistrationManager.DenyRegistration(activeUser);
+                        // Permissions.DenyRegistration(activeUser);
                         break;
 
                     case "0":
