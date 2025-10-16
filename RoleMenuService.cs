@@ -32,7 +32,7 @@ namespace Healthcare.services
             }
         }
 
-    }  
+    
 
     private void ShowAdminMenu(User admin, List<User> users)
         {
