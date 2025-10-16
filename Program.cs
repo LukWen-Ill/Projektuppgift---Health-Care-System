@@ -14,9 +14,9 @@ int.TryParse(s_userID_count, out int userID_count);
 
 
 // reads from Users.csv and adds list.
-using StreamReader reader = new StreamReader(path_userCsv);
+using (StreamReader reader = new StreamReader(path_userCsv))
 {
-    string line;
+    string? line;
 
     while ((line = reader.ReadLine()) != null)
     {
