@@ -34,8 +34,6 @@ using (StreamWriter writer = new StreamWriter(path_userCsv))
     }
 }
 
-
-
 User? active_user = null;
 
 
