@@ -6,24 +6,7 @@ string path_userCsv = FileHandler.GetDataPath("Users.csv");
 // creates Count.Txt.
 string path_countTxt = FileHandler.GetDataPath("Count.txt");
 
-// creates Events.csv.
-string path_EventLog = FileHandler.GetDataPath("Events.csv");
-
-
-// create hardcoded users.
-// User testUser = new User(1, "Lukas", "1", User.Role.Admin, User.Location.Hospital, User.Region.Region);
-// User testUser1 = new User(1, "Lukas", "1", User.Role.Admin, User.Location.Hospital, User.Region.Region);
-// User testUser2 = new User(2, "Anna", "2", User.Role.User, User.Location.Hospital, User.Region.Region);
-// User testUser3 = new User(3, "Erik", "3", User.Role.Staff, User.Location.Hospital, User.Region.Region);
-// User testUser4 = new User(4, "Maria", "4", User.Role.Patient, User.Location.Hospital, User.Region.Region);
-// User testUser5 = new User(5, "Oskar", "5", User.Role.User, User.Location.Hospital, User.Region.Region);
-//
-
-// two hardcoded user lists
-// List<User> testUsers = new() { testUser1, testUser2, testUser3, testUser4, testUser5 };
 List<User> users = new List<User>();
-// users.Add(testUser);
-//
 
 // gets count from Count.txt and converts to int.
 string s_userID_count = File.ReadAllText(path_countTxt);
@@ -47,9 +30,11 @@ using (StreamWriter writer = new StreamWriter(path_userCsv))
 {
     foreach (User user in users)
     {
-        writer.WriteLine(user.ToCsv());
+        writer.WriteLine($"{user.ToCsv()};{FileHandler.PermissionsToString(user.Permissions)}");
     }
 }
+
+
 
 User? active_user = null;
 
@@ -153,14 +138,10 @@ while (true)
         switch (active_user.UserRole)
         {
             case Role.Admin:
-                Console.Write("permissions: ");
-                active_user.ShowPermission();
                 RoleMenuService.ShowPermissionMenu(active_user);
                 break;
 
             case Role.Staff:
-                Console.Write("permissions: ");
-                active_user.ShowPermission();
                 RoleMenuService.ShowPermissionMenu(active_user);
                 break;
 

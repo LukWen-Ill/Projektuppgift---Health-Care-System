@@ -109,8 +109,6 @@ class EventLog
         else if (type == EventType.ScheduleViewed)
             FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} viewed a schedule"));
     }
-
-
 }
 public enum EventType
 {

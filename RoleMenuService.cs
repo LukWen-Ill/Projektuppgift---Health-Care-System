@@ -30,7 +30,6 @@ class RoleMenuService
                 ShowMenuOption(activeUser, Permission.ApproveAppointmentRequests, 5, "Approve appointment requests");
                 ShowMenuOption(activeUser, Permission.ViewLocationSchedule, 6, "View the schedule of a location");
 
-
                 Console.WriteLine("0) Logout");
                 Console.Write("\nSelect an option: ");
                 string? input = Console.ReadLine();
@@ -80,84 +79,79 @@ class RoleMenuService
             }
             else if (activeUser.UserRole == Role.Admin)
             {
-                running = true;
+                ShowMenuOption(activeUser, Permission.HandlePermissionSystem, 1, "Handle the permission system (fine granularity)");
+                ShowMenuOption(activeUser, Permission.AssignAdminsToRegions, 2, "Assign admins to certain regions");
+                ShowMenuOption(activeUser, Permission.HandleRegistrations, 3, "Handle registrations");
+                ShowMenuOption(activeUser, Permission.AddLocations, 4, "Add new locations");
+                ShowMenuOption(activeUser, Permission.CreatePersonnelAccounts, 5, "Create accounts for personnel");
+                ShowMenuOption(activeUser, Permission.ViewPermissionOverview, 6, "View who has permission to what");
+                ShowMenuOption(activeUser, Permission.AcceptPatientRegistrations, 7, "Accept user registration as patients");
+                ShowMenuOption(activeUser, Permission.DenyPatientRegistrations, 8, "Deny user registration as patients");
 
-                while (running)
+                Console.WriteLine("0) Logout");
+
+                Console.Write("\nSelect an option: ");
+                var input = Console.ReadLine();
+
+                switch (input)
                 {
+                    case "1":
+                        Console.WriteLine("Opening Permission System...");
+                        // PermissionManager.ManagePermissions(activeUser);
+                        break;
 
-                    ShowMenuOption(activeUser, Permission.HandlePermissionSystem, 1, "Handle the permission system (fine granularity)");
-                    ShowMenuOption(activeUser, Permission.AssignAdminsToRegions, 2, "Assign admins to certain regions");
-                    ShowMenuOption(activeUser, Permission.HandleRegistrations, 3, "Handle registrations");
-                    ShowMenuOption(activeUser, Permission.AddLocations, 4, "Add new locations");
-                    ShowMenuOption(activeUser, Permission.CreatePersonnelAccounts, 5, "Create accounts for personnel");
-                    ShowMenuOption(activeUser, Permission.ViewPermissionOverview, 6, "View who has permission to what");
-                    ShowMenuOption(activeUser, Permission.AcceptPatientRegistrations, 7, "Accept user registration as patients");
-                    ShowMenuOption(activeUser, Permission.DenyPatientRegistrations, 8, "Deny user registration as patients");
+                    case "2":
+                        Console.WriteLine("Assigning Admins to Regions...");
+                        // RegionManager.AssignAdminToRegion(activeUser);
+                        break;
 
-                    Console.WriteLine("0) Logout");
+                    case "3":
+                        Console.WriteLine("Handling Registrations...");
+                        // RegistrationManager.HandleRegistrations(activeUser);
+                        break;
 
-                    Console.Write("\nSelect an option: ");
-                    var input = Console.ReadLine();
+                    case "4":
+                        Console.WriteLine("Adding new Location...");
+                        // LocationManager.AddLocation(activeUser);
+                        break;
 
-                    switch (input)
-                    {
-                        case "1":
-                            Console.WriteLine("Opening Permission System...");
-                            // PermissionManager.ManagePermissions(activeUser);
-                            break;
+                    case "5":
+                        Console.WriteLine("Creating Personnel Account...");
+                        // PersonnelManager.CreatePersonnel(activeUser);
+                        break;
 
-                        case "2":
-                            Console.WriteLine("Assigning Admins to Regions...");
-                            // RegionManager.AssignAdminToRegion(activeUser);
-                            break;
+                    case "6":
+                        Console.WriteLine("Viewing Permission Overview...");
+                        // PermissionViewer.ShowOverview(activeUser);
+                        break;
 
-                        case "3":
-                            Console.WriteLine("Handling Registrations...");
-                            // RegistrationManager.HandleRegistrations(activeUser);
-                            break;
+                    case "7":
+                        Console.WriteLine("Accepting Patient Registration...");
+                        // RegistrationManager.AcceptRegistration(activeUser);
+                        break;
 
-                        case "4":
-                            Console.WriteLine("Adding new Location...");
-                            // LocationManager.AddLocation(activeUser);
-                            break;
+                    case "8":
+                        Console.WriteLine("Denying Patient Registration...");
+                        // RegistrationManager.DenyRegistration(activeUser);
+                        break;
 
-                        case "5":
-                            Console.WriteLine("Creating Personnel Account...");
-                            // PersonnelManager.CreatePersonnel(activeUser);
-                            break;
+                    case "0":
+                        running = false;
+                        Console.WriteLine("Logging out...");
+                        break;
 
-                        case "6":
-                            Console.WriteLine("Viewing Permission Overview...");
-                            // PermissionViewer.ShowOverview(activeUser);
-                            break;
-
-                        case "7":
-                            Console.WriteLine("Accepting Patient Registration...");
-                            // RegistrationManager.AcceptRegistration(activeUser);
-                            break;
-
-                        case "8":
-                            Console.WriteLine("Denying Patient Registration...");
-                            // RegistrationManager.DenyRegistration(activeUser);
-                            break;
-
-                        case "0":
-                            running = false;
-                            Console.WriteLine("Logging out...");
-                            break;
-
-                        default:
-                            Console.WriteLine("Invalid selection. Press Enter to continue.");
-                            Console.ReadLine();
-                            break;
-                    }
-
-                    if (running)
-                    {
-                        Console.WriteLine("\nPress Enter to continue...");
+                    default:
+                        Console.WriteLine("Invalid selection. Press Enter to continue.");
                         Console.ReadLine();
-                    }
+                        break;
                 }
+
+                if (running)
+                {
+                    Console.WriteLine("\nPress Enter to continue...");
+                    Console.ReadLine();
+                }
+
             }
             else if (activeUser.UserRole == Role.Patient)
             {

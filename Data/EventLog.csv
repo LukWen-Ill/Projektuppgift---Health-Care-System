@@ -1,2 +1,5 @@
 2025-10-15 08:24:34,6,User,UserLogout,0,Lukas logged out
 2025-10-15 15:16:16,7,User,RegistrationRequested,7,Lukke requested registration
+2025-10-16 07:39:55,7,Admin,UserLogin,7,Lukke logged in
+2025-10-16 07:47:36,8,User,RegistrationRequested,8,John requested registration
+2025-10-16 07:48:04,2,Admin,UserLogin,2,Admin logged in
