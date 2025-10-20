@@ -36,9 +36,9 @@ class Permissions
         // Loopar igenom våra användare i vår list och matchar idt med det som admin skrev. Sedan frågar om admin om de vill acceptera eller deny request
         foreach (User user in users)
         {
+                bool success = false;
             if (user.UserID == userid && user.UserRole == Role.User)
             {
-                bool success = false;
                 Console.WriteLine("Accept or Deny registration? (A/D)");
                 Console.WriteLine($"User ID: {user.UserID}, Name: {user.Username}");
                 string input_accept_deny = Console.ReadLine();
@@ -46,6 +46,7 @@ class Permissions
                 {
                     case "A":
                         user.UserRole = Role.Patient;
+                        user.Permissions.Add(Permission.UserLogin);
                         success = true;
                         FileHandler.Write(users, path_userCsv);
                         break;
@@ -57,7 +58,7 @@ class Permissions
                         break;
                 }
             }
-            else
+            else if (success = false)
             {
                 Console.WriteLine("No matching user found");
             }
