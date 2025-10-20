@@ -14,25 +14,11 @@ int.TryParse(s_userID_count, out int userID_count);
 
 
 // reads from Users.csv and adds list.
-using (StreamReader reader = new StreamReader(path_userCsv))
-{
-    string? line;
-
-    while ((line = reader.ReadLine()) != null)
-    {
-        User? user = User.FromCsv(line);
-        users.Add(user);
-    }
-}
+FileHandler.Read(users, path_userCsv);
 
 // writes from list to Users.csv
-using (StreamWriter writer = new StreamWriter(path_userCsv))
-{
-    foreach (User user in users)
-    {
-        writer.WriteLine($"{user.ToCsv()}");
-    }
-}
+FileHandler.Write(users, path_userCsv);
+
 
 User? active_user = null;
 
@@ -136,7 +122,7 @@ while (true)
         switch (active_user.UserRole)
         {
             case Role.Admin:
-                RoleMenuService.ShowPermissionMenu_Admin(active_user);
+                RoleMenuService.ShowPermissionMenu_Admin(active_user, users, path_userCsv);
                 break;
 
             case Role.Staff:

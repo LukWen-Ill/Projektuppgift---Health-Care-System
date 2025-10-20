@@ -135,4 +135,5 @@ enum Role // Set list of Roles.
     Admin,
     Staff,
     Patient,
+    Denied,
 }

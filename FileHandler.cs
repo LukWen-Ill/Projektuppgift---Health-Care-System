@@ -32,4 +32,27 @@ class FileHandler
         }
         return permission_list;
     }
+    public static void Write(List<User> users, string path)
+    {
+        using (StreamWriter writer = new StreamWriter(path))
+        {
+            foreach (User user in users)
+            {
+                writer.WriteLine($"{user.ToCsv()}");
+            }
+        }
+    }
+    public static void Read(List<User> users, string path)
+    {
+        using (StreamReader reader = new StreamReader(path))
+        {
+            string? line;
+
+            while ((line = reader.ReadLine()) != null)
+            {
+                User? user = User.FromCsv(line);
+                users.Add(user);
+            }
+        }
+    }
 }

@@ -84,7 +84,7 @@ class RoleMenuService
             }
         }
     }
-    public static void ShowPermissionMenu_Admin(User activeUser)
+    public static void ShowPermissionMenu_Admin(User activeUser, List<User> users, string path)
     {
         bool running = true;
 
@@ -119,9 +119,15 @@ class RoleMenuService
                     break;
 
                 case "3":
-                    Console.WriteLine("Handling Registrations...");
-                    // RegistrationManager.HandleRegistrations(activeUser);
-                    break;
+                    if (activeUser.TryPermission(Permission.HandleRegistrations))
+                    {
+                        Permissions.HandleRegistrations(activeUser, users, path);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Permission denied...");
+                    }
+                        break;
 
                 case "4":
                     Console.WriteLine("Adding new Location...");
