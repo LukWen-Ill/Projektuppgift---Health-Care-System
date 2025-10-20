@@ -33,7 +33,8 @@ class User
     }
 
     public string ToCsv()
-    {//       Interpolation transform any datatype to string.
+    {//     Interpolation transform any datatype to string.
+     //     
         return $"{UserID},{Username},{Password},{UserRole},{AssignedLocation},{AssignedRegion};{FileHandler.PermissionsToString(Permissions)}";
     }
 
@@ -135,4 +136,5 @@ enum Role // Set list of Roles.
     Admin,
     Staff,
     Patient,
+    Denied,
 }

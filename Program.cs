@@ -6,7 +6,24 @@ string path_userCsv = FileHandler.GetDataPath("Users.csv");
 // creates Count.Txt.
 string path_countTxt = FileHandler.GetDataPath("Count.txt");
 
+// creates Events.csv.
+string path_EventLog = FileHandler.GetDataPath("Events.csv");
+
+
+// create hardcoded users.
+// User testUser = new User(1, "Lukas", "1", User.Role.Admin, User.Location.Hospital, User.Region.Region);
+// User testUser1 = new User(1, "Lukas", "1", User.Role.Admin, User.Location.Hospital, User.Region.Region);
+// User testUser2 = new User(2, "Anna", "2", User.Role.User, User.Location.Hospital, User.Region.Region);
+// User testUser3 = new User(3, "Erik", "3", User.Role.Staff, User.Location.Hospital, User.Region.Region);
+// User testUser4 = new User(4, "Maria", "4", User.Role.Patient, User.Location.Hospital, User.Region.Region);
+// User testUser5 = new User(5, "Oskar", "5", User.Role.User, User.Location.Hospital, User.Region.Region);
+//
+
+// two hardcoded user lists
+// List<User> testUsers = new() { testUser1, testUser2, testUser3, testUser4, testUser5 };
 List<User> users = new List<User>();
+// users.Add(testUser);
+//
 
 // gets count from Count.txt and converts to int.
 string s_userID_count = File.ReadAllText(path_countTxt);
@@ -14,7 +31,7 @@ int.TryParse(s_userID_count, out int userID_count);
 
 
 // reads from Users.csv and adds list.
-using (StreamReader reader = new StreamReader(path_userCsv))
+using (StreamReader reader = new StreamReader(path_userCsv));
 {
     string? line;
 
@@ -30,7 +47,7 @@ using (StreamWriter writer = new StreamWriter(path_userCsv))
 {
     foreach (User user in users)
     {
-        writer.WriteLine($"{user.ToCsv()}");
+        writer.WriteLine(user.ToCsv());
     }
 }
 
@@ -77,7 +94,7 @@ while (true)
 
                         User user = new User(userID_count, u_input, p_input, Role.User, Location.Hospital, Region.Region);
                         users.Add(user);
-                        EventLog.Eventlogger(user, EventType.RegistrationRequested);
+                        EventLog.Eventlogger(active_user, EventType.RegistrationRequested);
                         Console.WriteLine("user added, ID: " + userID_count);
                     }
                     // counter for UserID
@@ -133,19 +150,195 @@ while (true)
     // Logged in
     else if (active_user != null)
     {
-        switch (active_user.UserRole)
+        if (active_user.UserRole == Role.User)
         {
-            case Role.Admin:
-                RoleMenuService.ShowPermissionMenu(active_user);
-                break;
+            // Features to DEV:
+            // As a user, I need to be able to request registration as a patient.
 
-            case Role.Staff:
-                RoleMenuService.ShowPermissionMenu(active_user);
-                break;
 
-            case Role.Patient:
-                RoleMenuService.ShowPermissionMenu(active_user);
-                break;
+        }
+        else if (active_user.UserRole == Role.Admin)
+        {
+            Console.WriteLine($"you are logged in as: {Role.Admin}");
+
+            Console.WriteLine("Handle the permission system, in fine granularity");
+
+
+            // Assign admins to certain regions
+            // Handle registrations
+            // Add locations
+            // Create accounts for personnel
+            // View a list of who has permission to what
+            // Accept user registration as patients
+            // Deny user registration as patients
+
+
+        }
+        else if (active_user.UserRole == Role.Staff)
+        {
+            Console.WriteLine($"you are logged in as: {Role.Staff}");
+
+            // View a patient's journal entries
+            // Mark journal entries with levels of read permissions(Each journal entry has a simple boolean — for example IsSensitive = true / false.
+            // Personnel either have CanViewSensitive = true / false)
+            // Register appointments
+            // Modify appointments
+            // Approve appointment requests
+            // View the schedule of a location
+
+            Console.WriteLine($"\"logout\"");
+            if (Console.ReadLine() == "logout")
+            {
+                active_user = null;
+
+            }
+        }
+
+        
+        else if (active_user.UserRole == Role.Patient)
+        {
+            Console.WriteLine($"you are logged in as: {Role.Patient}");
+
+            Console.WriteLine($"\"logout\"");
+            if (Console.ReadLine() == "logout")
+            {
+                active_user = null;
+            }
         }
     }
+
+
+    
+
+     
+
+
 }
+/*Console.WriteLine("1. ViewPatientJournalEntries");
+        Console.WriteLine("2. MarkSensitiveEntries");
+        Console.WriteLine("3. ViewSensitiveEntrie");
+        Console.WriteLine("4. RegisterAppointments");
+        Console.WriteLine("5. ModifyAppointments");
+        Console.WriteLine("6. ApproveAppointmentRequests");
+        Console.WriteLine("7. ViewLocationSchedule");
+        Console.WriteLine("7. AcceptPatientRegistrations");
+        Console.WriteLine("7. DenyPatientRegistrations");
+        Console.WriteLine("7. HandleRegistrations");
+        Console.WriteLine("7. CreatePersonnelAccounts");
+        Console.WriteLine("7. AddLocations");
+        Console.WriteLine("7. AssignAdminsToRegions");
+        Console.WriteLine("7. ViewPermissionOverview");
+        Console.WriteLine("7. HandlePermissionSystem");
+        string? input = Console.ReadLine() ?? "";
+        switch (input) // Switchen matchar numret och kollar rätt permission via ActiveUserHasPermission().
+        //Funktionen returnerar true/false baserat på active_user.Permissions.
+        {
+            case "1": 
+            if (ActiveUserHasPermission(StaffPermission.ViewPatientJournalEntries))
+                Console.WriteLine("You CAN view patient journals!");
+            else
+                Console.WriteLine("You CANNOT view patient journals!");
+                break;
+            case "2":
+            if (ActiveUserHasPermission(StaffPermission.MarkSensitiveEntries))
+                Console.WriteLine("You CAN mark sensitive entries!");
+            else
+                Console.WriteLine("You CANNOT mark sensitive entries!");
+            break;
+
+        case "3":
+            if (ActiveUserHasPermission(StaffPermission.ViewSensitiveEntries))
+                Console.WriteLine("You CAN view sensitive entries!");
+            else
+                Console.WriteLine("You CANNOT view sensitive entries!");
+            break;
+
+        case "4":
+            if (ActiveUserHasPermission(StaffPermission.RegisterAppointments))
+                Console.WriteLine("You CAN register appointments!");
+            else
+                Console.WriteLine("You CANNOT register appointments!");
+            break;
+
+        case "5":
+            if (ActiveUserHasPermission(StaffPermission.ModifyAppointments))
+                Console.WriteLine("You CAN modify appointments!");
+            else
+                Console.WriteLine("You CANNOT modify appointments!");
+            break;
+
+        case "6":
+            if (ActiveUserHasPermission(StaffPermission.ApproveAppointmentRequests))
+                Console.WriteLine("You CAN approve appointment requests!");
+            else
+                Console.WriteLine("You CANNOT approve appointment requests!");
+            break;
+
+        case "7":
+            if (ActiveUserHasPermission(StaffPermission.ViewLocationSchedule))
+                Console.WriteLine("You CAN view location schedule!");
+            else
+                Console.WriteLine("You CANNOT view location schedule!");
+            break;
+
+        // Admin-permissions
+        case "8":
+            if (ActiveUserHasPermission(AdminPermission.AcceptPatientRegistrations))
+                Console.WriteLine("You CAN accept patient registrations!");
+            else
+                Console.WriteLine("You CANNOT accept patient registrations!");
+            break;
+
+        case "9":
+            if (ActiveUserHasPermission(AdminPermission.DenyPatientRegistrations))
+                Console.WriteLine("You CAN deny patient registrations!");
+            else
+                Console.WriteLine("You CANNOT deny patient registrations!");
+            break;
+
+        case "10":
+            if (ActiveUserHasPermission(AdminPermission.HandleRegistrations))
+                Console.WriteLine("You CAN handle registrations!");
+            else
+                Console.WriteLine("You CANNOT handle registrations!");
+            break;
+
+        case "11":
+            if (ActiveUserHasPermission(AdminPermission.CreatePersonnelAccounts))
+                Console.WriteLine("You CAN create personnel accounts!");
+            else
+                Console.WriteLine("You CANNOT create personnel accounts!");
+            break;
+
+        case "12":
+            if (ActiveUserHasPermission(AdminPermission.AddLocations))
+                Console.WriteLine("You CAN add locations!");
+            else
+                Console.WriteLine("You CANNOT add locations!");
+            break;
+
+        case "13":
+            if (ActiveUserHasPermission(AdminPermission.AssignAdminsToRegions))
+                Console.WriteLine("You CAN assign admins to regions!");
+            else
+                Console.WriteLine("You CANNOT assign admins to regions!");
+            break;
+
+        case "14":
+            if (ActiveUserHasPermission(AdminPermission.ViewPermissionOverview))
+                Console.WriteLine("You CAN view permission overview!");
+            else
+                Console.WriteLine("You CANNOT view permission overview!");
+            break;
+
+        case "15":
+            if (ActiveUserHasPermission(AdminPermission.HandlePermissionSystem))
+                Console.WriteLine("You CAN handle permission system!");
+            else
+                Console.WriteLine("You CANNOT handle permission system!");
+            break;
+
+        default:
+            Console.WriteLine("Invalid input.");
+            break;
+        }*/

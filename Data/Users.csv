@@ -1,8 +1,9 @@
-1,User,123,User,Hospital,Region;
+1,User,123,Patient,Hospital,Region;UserLogin
 2,Admin,123,Admin,Hospital,Region;UserLogin, HandleRegistrations, HandlePermissionSystem
 3,Staff,123,Staff,Hospital,Region;UserLogin
 4,Patient,123,Patient,Hospital,Region;UserLogin
-5,Mohamed,123,User,Hospital,Region;
+5,Mohamed,123,Patient,Hospital,Region;UserLogin
 6,Lukas,123,Admin,Hospital,Region;UserLogin, HandleRegistrations, HandlePermissionSystem
 7,Lukke,123,Admin,Hospital,Region;UserLogin, HandleRegistrations, HandlePermissionSystem
 9,2,2,User,Hospital,Region;
+10,momme,1,User,Hospital,Region;
