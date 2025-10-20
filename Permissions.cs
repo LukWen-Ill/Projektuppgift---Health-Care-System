@@ -19,9 +19,57 @@ class Permissions
     public static void HandleRegistrations(User activeUser)
     {
         Console.WriteLine("Handling registrations...");
-        // TODO: implement logic
+        // TODO: implement logic¨
+          public static void HandleRegistrations(User activeUser, List<User> users)
+    {
+        Console.WriteLine("Handling registrations...");
+ 
+        // Loopar genom alla användare i listan och skriver ut de som har rollen "user
+        foreach (User user in users)
+        {
+            if (user.UserRole == Role.User)
+            {
+                Console.WriteLine("You are a User" + user.Username + "and your id is: " + user.UserID);
+                Console.WriteLine($"You are a User {user.Username} and your id is: {user.UserID}");
+            }
+        }
+       
+        // Frågar admin om ett id och sedan konverterar det till en int
+        Console.WriteLine("Chose an id ");
+        string input_userid = Console.ReadLine();
+        int.TryParse(input_userid, out int userid);
+ 
+ 
+       // Loopar igenom våra användare i vår list och matchar idt med det som admin skrev. Sedan frågar om admin om de vill acceptera eller deny request
+        foreach (User user in users)
+        {
+            if (user.UserID == userid && user.UserRole == Role.User)
+            {
+                Console.WriteLine($"User: {user.Username}, ID: {user.UserID}");
+                Console.WriteLine("Accept or Deny registration?");
+                string input_userstatus = Console.ReadLine();
+                switch (input_userstatus)
+                {
+                    case "Accept":
+                        user.UserRole = Role.Patient;
+                        break;
+                    case "Deny":
+                        user.UserRole = Role.Denied; 
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("No matching user found");
+            }
+           
+        }
         // EventLog.Eventlogger(activeUser, EventLog.EventType.HandleRegistrations);
     }
+ 
+        // EventLog.Eventlogger(activeUser, EventLog.EventType.HandleRegistrations)
 
     public static void AddLocation(User activeUser)
     {
