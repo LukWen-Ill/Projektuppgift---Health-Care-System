@@ -13,6 +13,20 @@ class FileHandler
 
         return Path.Combine(programFolder, csv_filename);
     }
+    public static int Read_count()
+    {
+        string path_countTxt = GetDataPath("Count.txt");
+        string s_userID_count = File.ReadAllText(path_countTxt);
+        int.TryParse(s_userID_count, out int userID_count);
+        return userID_count;
+    }
+    public static void Write_count(int userID_count)
+    {
+        string path_countTxt = GetDataPath("Count.txt");
+        File.WriteAllText(path_countTxt, userID_count.ToString());
+    }
+
+
 
     public static void LogEvent(EventLog log)
     {

@@ -89,20 +89,6 @@ class Permissions
         // EventLog.Eventlogger(activeUser, EventLog.EventType.PermissionViewed);
     }
 
-    public static void AcceptRegistration(User activeUser)
-    {
-        Console.WriteLine("Accepting patient registration...");
-        // TODO: implement logic
-        // EventLog.Eventlogger(activeUser, EventLog.EventType.RegistrationAccepted);
-    }
-
-    public static void DenyRegistration(User activeUser)
-    {
-        Console.WriteLine("Denying patient registration...");
-        // TODO: implement logic
-        // EventLog.Eventlogger(activeUser, EventLog.EventType.RegistrationDenied);
-    }
-
     public static void ViewPatientJournalEntries(User activeUser)
     {
         Console.WriteLine("Viewing patient journals...");

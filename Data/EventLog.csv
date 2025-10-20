@@ -19,3 +19,5 @@
 2025-10-20 14:38:04,6,Admin,UserLogin,6,Lukas logged in
 2025-10-20 14:38:10,6,Admin,RegistrationAccepted,0,Lukas accepted registration
 2025-10-20 14:38:23,6,Admin,RegistrationDenied,0,Lukas denied registration
+10/20/2025 3:29:20 PM,10,User,RegistrationRequested,10,Emanuel requested registration
+10/20/2025 3:34:39 PM,11,User,RegistrationRequested,11,Hej requested registration
