@@ -136,15 +136,15 @@ while (true)
         switch (active_user.UserRole)
         {
             case Role.Admin:
-                RoleMenuService.ShowPermissionMenu(active_user);
+                RoleMenuService.ShowPermissionMenu_Admin(active_user);
                 break;
 
             case Role.Staff:
-                RoleMenuService.ShowPermissionMenu(active_user);
+                RoleMenuService.ShowPermissionMenu_Staff(active_user);
                 break;
 
             case Role.Patient:
-                RoleMenuService.ShowPermissionMenu(active_user);
+                RoleMenuService.ShowPermissionMenu_Patient(active_user);
                 break;
         }
     }
