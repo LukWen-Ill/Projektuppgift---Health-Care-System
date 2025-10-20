@@ -7,7 +7,8 @@ class User
     // All Users have: 
     // UserID. will be set dynamicly
     // Username. 
-    // Password.
+    // Password.rdd
+    
     // Role is defaulted to Role.User.
     // Location is defaulted to Hospital.
     // Region is defaulted to Region.
