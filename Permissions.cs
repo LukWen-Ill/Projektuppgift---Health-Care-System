@@ -15,61 +15,56 @@ class Permissions
         // TODO: implement logic
         // EventLog.Eventlogger(activeUser, EventLog.EventType.AdminAssignedToRegion);
     }
+        public static void HandleRegistrations(User activeUser, List<User> users, string path_userCsv)
+    {
+        Console.WriteLine("List of registration requests");
 
-    public static void HandleRegistrations(User activeUser)
-    {
-        Console.WriteLine("Handling registrations...");
-        // TODO: implement logic¨
-          public static void HandleRegistrations(User activeUser, List<User> users)
-    {
-        Console.WriteLine("Handling registrations...");
- 
         // Loopar genom alla användare i listan och skriver ut de som har rollen "user
         foreach (User user in users)
         {
             if (user.UserRole == Role.User)
             {
-                Console.WriteLine("You are a User" + user.Username + "and your id is: " + user.UserID);
-                Console.WriteLine($"You are a User {user.Username} and your id is: {user.UserID}");
+                Console.WriteLine($"UserID: {user.UserID}, Username: {user.Username}\n");
             }
         }
-       
+
         // Frågar admin om ett id och sedan konverterar det till en int
-        Console.WriteLine("Chose an id ");
+        Console.Write("Chose an id: ");
         string input_userid = Console.ReadLine();
         int.TryParse(input_userid, out int userid);
- 
- 
-       // Loopar igenom våra användare i vår list och matchar idt med det som admin skrev. Sedan frågar om admin om de vill acceptera eller deny request
+
+        // Loopar igenom våra användare i vår list och matchar idt med det som admin skrev. Sedan frågar om admin om de vill acceptera eller deny request
         foreach (User user in users)
         {
+                bool success = false;
             if (user.UserID == userid && user.UserRole == Role.User)
             {
-                Console.WriteLine($"User: {user.Username}, ID: {user.UserID}");
-                Console.WriteLine("Accept or Deny registration?");
-                string input_userstatus = Console.ReadLine();
-                switch (input_userstatus)
+                Console.WriteLine("Accept or Deny registration? (A/D)");
+                Console.WriteLine($"User ID: {user.UserID}, Name: {user.Username}");
+                string input_accept_deny = Console.ReadLine();
+                switch (input_accept_deny)
                 {
-                    case "Accept":
+                    case "A":
                         user.UserRole = Role.Patient;
+                        user.Permissions.Add(Permission.UserLogin);
+                        success = true;
+                        FileHandler.Write(users, path_userCsv);
                         break;
-                    case "Deny":
-                        user.UserRole = Role.Denied; 
+                    case "D":
+                        user.UserRole = Role.Denied;
+                        FileHandler.Write(users, path_userCsv);
                         break;
                     default:
                         break;
                 }
             }
-            else
+            else if (success = false)
             {
                 Console.WriteLine("No matching user found");
             }
-           
+
         }
-        // EventLog.Eventlogger(activeUser, EventLog.EventType.HandleRegistrations);
-    }
- 
-        // EventLog.Eventlogger(activeUser, EventLog.EventType.HandleRegistrations)
+    }   // EventLog.Eventlogger(activeUser, EventLog.EventType.HandleRegistrations);
 
     public static void AddLocation(User activeUser)
     {
