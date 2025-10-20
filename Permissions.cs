@@ -49,10 +49,12 @@ class Permissions
                         user.Permissions.Add(Permission.UserLogin);
                         success = true;
                         FileHandler.Write(users, path_userCsv);
+                        EventLog.Eventlogger(activeUser, EventType.RegistrationAccepted);
                         break;
                     case "D":
                         user.UserRole = Role.Denied;
                         FileHandler.Write(users, path_userCsv);
+                        EventLog.Eventlogger(activeUser, EventType.RegistrationDenied);
                         break;
                     default:
                         break;
@@ -64,7 +66,7 @@ class Permissions
             }
 
         }
-    }   // EventLog.Eventlogger(activeUser, EventLog.EventType.HandleRegistrations);
+    }   
 
     public static void AddLocation(User activeUser)
     {
