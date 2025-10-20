@@ -16,3 +16,6 @@
 2025-10-20 14:25:45,6,Admin,UserLogin,6,Lukas logged in
 2025-10-20 14:27:08,6,Admin,UserLogin,6,Lukas logged in
 2025-10-20 14:29:19,6,Admin,UserLogin,6,Lukas logged in
+2025-10-20 14:38:04,6,Admin,UserLogin,6,Lukas logged in
+2025-10-20 14:38:10,6,Admin,RegistrationAccepted,0,Lukas accepted registration
+2025-10-20 14:38:23,6,Admin,RegistrationDenied,0,Lukas denied registration
