@@ -7,3 +7,5 @@
 7,Lukke,123,Admin,Hospital,Region;UserLogin, HandleRegistrations, HandlePermissionSystem
 9,2,2,Denied,Hospital,Region;
 10,momme,1,Patient,Hospital,Region;UserLogin
+10,Emanuel,123,User,Hospital,Region;
+11,Hej,111,User,Hospital,Region;
