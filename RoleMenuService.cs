@@ -21,7 +21,7 @@ class RoleMenuService
 
         while (running)
         {
-            Console.WriteLine($"Logged in as {activeUser.UserRole}: {activeUser.Username}");
+            Console.WriteLine($"Logged in as {activeUser.UserRole}: ID:{activeUser.Username}");
             Console.WriteLine("Select an action:\n");
 
             ShowMenuOption(activeUser, Permission.ViewPatientJournalEntries, 1, "View a patient's journal entries");
@@ -129,7 +129,7 @@ class RoleMenuService
 
                 case "5":
                     Console.WriteLine("Creating Personnel Account...");
-                    // PersonnelManager.CreatePersonnel(activeUser);
+                    Permissions.CreatePersonnel(activeUser, users, path, Role.Staff);
                     break;
 
                 case "6":

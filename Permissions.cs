@@ -60,7 +60,7 @@ class Permissions
                         user.UserRole = Role.Patient;
                         user.Permissions.Add(Permission.UserLogin);
                         FileHandler.Write(users, path); // update userlist
-                        EventLog.Eventlogger(activeUser, EventType.RegistrationAccepted); // log event
+                        EventLog.Eventlogger(activeUser, EventType.RegistrationAccepted, user); // log event
                         Console.WriteLine($"\nUser ID: {user.UserID}, Name: {user.Username} Registration Complete");
                         break;
                     }
@@ -68,7 +68,7 @@ class Permissions
                     {
                         user.UserRole = Role.Denied;
                         FileHandler.Write(users, path); // update userlist
-                        EventLog.Eventlogger(activeUser, EventType.RegistrationDenied); // log event
+                        EventLog.Eventlogger(activeUser, EventType.RegistrationDenied, user); // log event
                         Console.WriteLine($"\nUser ID: {user.UserID}, Name: {user.Username} Registration Denied");
                         break;
                     }
@@ -97,11 +97,9 @@ class Permissions
         // EventLog.Eventlogger(activeUser, EventLog.EventType.LocationAdded);
     }
 
-    public static void CreatePersonnel(User activeUser)
+    public static void CreatePersonnel(User activeUser, List<User> users, string path, Role role)
     {
-        Console.WriteLine("Creating personnel account...");
-        // TODO: implement logic
-        // EventLog.Eventlogger(activeUser, EventLog.EventType.PersonnelAccountCreated);
+        User.RegisterNewUser(activeUser, users, path, role);
     }
 
     public static void ViewPermissionOverview(User activeUser)

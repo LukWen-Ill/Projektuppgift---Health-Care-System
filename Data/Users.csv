@@ -3,7 +3,7 @@
 3,Staff,123,Staff,Hospital,Region;UserLogin
 4,Patient,123,Patient,Hospital,Region;UserLogin
 5,Mohamed,123,Patient,Hospital,Region;UserLogin
-6,Lukas,123,Admin,Hospital,Region;UserLogin, HandleRegistrations, HandlePermissionSystem, AcceptPatientRegistrations, DenyPatientRegistrations
+6,Lukas,123,Admin,Hospital,Region;UserLogin, HandleRegistrations, HandlePermissionSystem, AcceptPatientRegistrations, DenyPatientRegistrations, CreatePersonnelAccounts
 7,Lukke,123,Admin,Hospital,Region;UserLogin, HandleRegistrations, HandlePermissionSystem, AcceptPatientRegistrations
 8,momme,1,Patient,Hospital,Region;UserLogin
 9,3,2,Denied,Hospital,Region;
@@ -14,3 +14,6 @@
 14,14,14,Denied,Hospital,Region;
 15,15,15,User,Hospital,Region;
 16,16,16,User,Hospital,Region;
+17,17,17,User,Hospital,Region;
+18,Lukasw,123,User,Hospital,Region;
+19,Manny,123,Staff,Hospital,Region;

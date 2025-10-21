@@ -28,7 +28,7 @@ while (true)
         // Register
         if (input == "1")
         {
-            User.RegisterNewUser(users, path_userCsv);
+            User.RegisterNewUser(active_user, users, path_userCsv, Role.User);
         }
 
         // Login
