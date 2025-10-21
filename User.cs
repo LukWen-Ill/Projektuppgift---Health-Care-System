@@ -145,6 +145,7 @@ class User
                     }
                     else if (user.UserRole == Role.Admin || user.UserRole == Role.Staff)
                     {
+                        user.Permissions.Add(Permission.UserLogin);
                         EventLog.Eventlogger(active_user, EventType.PersonnelAccountCreated, user);
                         Console.WriteLine("Personnel account added, ID: " + userID_count);
                     }

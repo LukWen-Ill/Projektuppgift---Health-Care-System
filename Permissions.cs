@@ -17,76 +17,80 @@ class Permissions
     }
     public static void HandleRegistrations(User activeUser, List<User> users, string path)
     {
-        // Visar en lista på alla requested registrations
-        Console.WriteLine("List of registration requests");
-        foreach (User user in users)
+        if (activeUser.TryPermission(Permission.HandleRegistrations))
         {
-            if (user.UserRole == Role.User)
-            {
-                Console.WriteLine($"UserID: {user.UserID}, Username: {user.Username}\n");
-            }
-        }
 
-        // Kollar om user får accept eller deny registration requests
-        if (activeUser.TryPermission(Permission.AcceptPatientRegistrations) || activeUser.TryPermission(Permission.DenyPatientRegistrations))
-        {
-            // Frågar admin om ett id och sedan konverterar det till en int
-            Console.Write("Chose an id: ");
-            string input_userid = Console.ReadLine();
-            int.TryParse(input_userid, out int userid);
-
-            // Loopar igenom våra användare i vår list och matchar idt med det som admin skrev. Sedan frågar om admin om de vill acceptera eller deny request
-            bool user_found = false;
+            // Visar en lista på alla requested registrations
+            Console.WriteLine("List of registration requests");
             foreach (User user in users)
             {
-                if (user.UserID == userid && user.UserRole == Role.User)
+                if (user.UserRole == Role.User)
                 {
-                    user_found = true;
-                    // Menu based on Permissions
-                    if (activeUser.TryPermission(Permission.AcceptPatientRegistrations)) { Console.Write("Accept"); }
-                    if (activeUser.TryPermission(Permission.AcceptPatientRegistrations) && activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write(" or "); }
-                    if (activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("Deny"); }
-                    Console.Write(" registration? (");
-                    if (activeUser.TryPermission(Permission.AcceptPatientRegistrations)) { Console.Write("A"); }
-                    if (activeUser.TryPermission(Permission.AcceptPatientRegistrations) && activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("/"); }
-                    if (activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("D"); }
-                    Console.WriteLine(")");
-                    Console.WriteLine($"User ID: {user.UserID}, Name: {user.Username}");
-
-                    string input_accept_deny = Console.ReadLine();
-
-                    if (input_accept_deny == "A" && activeUser.TryPermission(Permission.AcceptPatientRegistrations))
-                    {
-                        user.UserRole = Role.Patient;
-                        user.Permissions.Add(Permission.UserLogin);
-                        FileHandler.Write(users, path); // update userlist
-                        EventLog.Eventlogger(activeUser, EventType.RegistrationAccepted, user); // log event
-                        Console.WriteLine($"\nUser ID: {user.UserID}, Name: {user.Username} Registration Complete");
-                        break;
-                    }
-                    else if (input_accept_deny == "D" && activeUser.TryPermission(Permission.DenyPatientRegistrations))
-                    {
-                        user.UserRole = Role.Denied;
-                        FileHandler.Write(users, path); // update userlist
-                        EventLog.Eventlogger(activeUser, EventType.RegistrationDenied, user); // log event
-                        Console.WriteLine($"\nUser ID: {user.UserID}, Name: {user.Username} Registration Denied");
-                        break;
-                    }
-                    else
-                        Console.WriteLine("cancelled");
-
-                    break;
+                    Console.WriteLine($"UserID: {user.UserID}, Username: {user.Username}\n");
                 }
             }
-            if (!user_found)
-            {
-                Console.WriteLine("No matching user found");
-            }
-        }
-        else
-        {
-            Console.WriteLine("Permission to accept or deny not found");
 
+            // Kollar om user får accept eller deny registration requests
+            if (activeUser.TryPermission(Permission.AcceptPatientRegistrations) || activeUser.TryPermission(Permission.DenyPatientRegistrations))
+            {
+                // Frågar admin om ett id och sedan konverterar det till en int
+                Console.Write("Chose an id: ");
+                string input_userid = Console.ReadLine();
+                int.TryParse(input_userid, out int userid);
+
+                // Loopar igenom våra användare i vår list och matchar idt med det som admin skrev. Sedan frågar om admin om de vill acceptera eller deny request
+                bool user_found = false;
+                foreach (User user in users)
+                {
+                    if (user.UserID == userid && user.UserRole == Role.User)
+                    {
+                        user_found = true;
+                        // Menu based on Permissions
+                        if (activeUser.TryPermission(Permission.AcceptPatientRegistrations)) { Console.Write("Accept"); }
+                        if (activeUser.TryPermission(Permission.AcceptPatientRegistrations) && activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write(" or "); }
+                        if (activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("Deny"); }
+                        Console.Write(" registration? (");
+                        if (activeUser.TryPermission(Permission.AcceptPatientRegistrations)) { Console.Write("A"); }
+                        if (activeUser.TryPermission(Permission.AcceptPatientRegistrations) && activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("/"); }
+                        if (activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("D"); }
+                        Console.WriteLine(")");
+                        Console.WriteLine($"User ID: {user.UserID}, Name: {user.Username}");
+
+                        string input_accept_deny = Console.ReadLine();
+
+                        if (input_accept_deny == "A" && activeUser.TryPermission(Permission.AcceptPatientRegistrations))
+                        {
+                            user.UserRole = Role.Patient;
+                            user.Permissions.Add(Permission.UserLogin);
+                            FileHandler.Write(users, path); // update userlist
+                            EventLog.Eventlogger(activeUser, EventType.RegistrationAccepted, user); // log event
+                            Console.WriteLine($"\nUser ID: {user.UserID}, Name: {user.Username} Registration Complete");
+                            break;
+                        }
+                        else if (input_accept_deny == "D" && activeUser.TryPermission(Permission.DenyPatientRegistrations))
+                        {
+                            user.UserRole = Role.Denied;
+                            FileHandler.Write(users, path); // update userlist
+                            EventLog.Eventlogger(activeUser, EventType.RegistrationDenied, user); // log event
+                            Console.WriteLine($"\nUser ID: {user.UserID}, Name: {user.Username} Registration Denied");
+                            break;
+                        }
+                        else
+                            Console.WriteLine("cancelled");
+
+                        break;
+                    }
+                }
+                if (!user_found)
+                {
+                    Console.WriteLine("No matching user found");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Permission to accept or deny not found");
+
+            }
         }
     }
 
@@ -99,7 +103,10 @@ class Permissions
 
     public static void CreatePersonnel(User activeUser, List<User> users, string path, Role role)
     {
-        User.RegisterNewUser(activeUser, users, path, role);
+        if (activeUser.TryPermission(Permission.CreatePersonnelAccounts))
+        {
+            User.RegisterNewUser(activeUser, users, path, role);
+        }
     }
 
     public static void ViewPermissionOverview(User activeUser)
