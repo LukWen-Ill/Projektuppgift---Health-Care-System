@@ -3,8 +3,6 @@ using App;
 
 // creates Users.csv.
 string path_userCsv = FileHandler.GetDataPath("Users.csv");
-// creates Count.Txt.
-string path_countTxt = FileHandler.GetDataPath("Count.txt");
 
 // creates Events.csv.
 string path_EventLog = FileHandler.GetDataPath("Events.csv");
@@ -25,12 +23,8 @@ List<User> users = new List<User>();
 // users.Add(testUser);
 //
 
-// gets count from Count.txt and converts to int.
-string s_userID_count = File.ReadAllText(path_countTxt);
-int.TryParse(s_userID_count, out int userID_count);
-
-
 // reads from Users.csv and adds list.
+<<<<<<< HEAD
 using (StreamReader reader = new StreamReader(path_userCsv));
 {
     string? line;
@@ -50,6 +44,13 @@ using (StreamWriter writer = new StreamWriter(path_userCsv))
         writer.WriteLine(user.ToCsv());
     }
 }
+=======
+FileHandler.Read(users, path_userCsv);
+
+// writes from list to Users.csv
+FileHandler.Write(users, path_userCsv);
+
+>>>>>>> c4a33cd4ea31b0d96493012d90957d9b11401ca8
 
 User? active_user = null;
 
@@ -66,6 +67,7 @@ while (true)
         // Register
         if (input == "1")
         {
+<<<<<<< HEAD
             bool is_viable = true;
             Console.Write("enter username: ");
             string? u_input = Console.ReadLine();
@@ -115,35 +117,20 @@ while (true)
                     Console.WriteLine("invalid input");
                 }
             }
+=======
+            User.RegisterNewUser(active_user, users, path_userCsv, Role.User);
+>>>>>>> c4a33cd4ea31b0d96493012d90957d9b11401ca8
         }
 
         // Login
         if (input == "2")
         {
-
             Console.Write("enter username: ");
             string? u_input = Console.ReadLine();
             Console.Write("enter password: ");
             string? p_input = Console.ReadLine();
 
-            foreach (User user in users)
-            {
-                if (u_input == user.Username && p_input == user.Password && user.TryPermission(Permission.UserLogin))
-                {
-
-                    active_user = user;
-                    EventLog.Eventlogger(active_user, EventType.UserLogin);
-                    Console.WriteLine("login sucessful");
-
-                    break;
-
-                }
-            }
-            if (active_user == null)
-            {
-                Console.WriteLine("login failed. Press Enter to continue");
-                Console.ReadLine();
-            }
+            active_user = User.TryLogin(active_user, u_input, p_input, users);
         }
     }
 
@@ -152,6 +139,7 @@ while (true)
     {
         if (active_user.UserRole == Role.User)
         {
+<<<<<<< HEAD
             // Features to DEV:
             // As a user, I need to be able to request registration as a patient.
 
@@ -204,7 +192,21 @@ while (true)
             {
                 active_user = null;
             }
+=======
+            case Role.Admin:
+                RoleMenuService.ShowPermissionMenu_Admin(active_user, users, path_userCsv);
+                break;
+
+            case Role.Staff:
+                RoleMenuService.ShowPermissionMenu_Staff(active_user);
+                break;
+
+            case Role.Patient:
+                RoleMenuService.ShowPermissionMenu_Patient(active_user);
+                break;
+>>>>>>> c4a33cd4ea31b0d96493012d90957d9b11401ca8
         }
+        active_user = null;
     }
 
 

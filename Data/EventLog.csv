@@ -16,3 +16,33 @@
 2025-10-20 14:25:45,6,Admin,UserLogin,6,Lukas logged in
 2025-10-20 14:27:08,6,Admin,UserLogin,6,Lukas logged in
 2025-10-20 14:29:19,6,Admin,UserLogin,6,Lukas logged in
+<<<<<<< HEAD
+=======
+2025-10-20 14:38:04,6,Admin,UserLogin,6,Lukas logged in
+2025-10-20 14:38:10,6,Admin,RegistrationAccepted,0,Lukas accepted registration
+2025-10-20 14:38:23,6,Admin,RegistrationDenied,0,Lukas denied registration
+10/20/2025 3:29:20 PM,10,User,RegistrationRequested,10,Emanuel requested registration
+10/20/2025 3:34:39 PM,11,User,RegistrationRequested,11,Hej requested registration
+2025-10-21 06:36:42,7,Admin,UserLogin,7,Lukke logged in
+2025-10-21 08:25:36,6,Admin,UserLogin,6,Lukas logged in
+2025-10-21 08:28:50,12,User,RegistrationRequested,12,1 requested registration
+2025-10-21 08:28:55,13,User,RegistrationRequested,13,13 requested registration
+2025-10-21 08:28:59,14,User,RegistrationRequested,14,14 requested registration
+2025-10-21 08:29:01,15,User,RegistrationRequested,15,15 requested registration
+2025-10-21 08:29:05,16,User,RegistrationRequested,16,16 requested registration
+2025-10-21 08:29:10,6,Admin,UserLogin,6,Lukas logged in
+2025-10-21 08:35:17,6,Admin,UserLogin,6,Lukas logged in
+2025-10-21 08:37:09,6,Admin,UserLogin,6,Lukas logged in
+2025-10-21 08:39:17,6,Admin,UserLogin,6,Lukas logged in
+2025-10-21 08:39:35,6,Admin,RegistrationAccepted,0,Lukas accepted registration
+2025-10-21 08:45:37,6,Admin,UserLogin,6,Lukas logged in
+2025-10-21 08:45:46,6,Admin,RegistrationDenied,0,Lukas denied registration
+2025-10-21 08:51:22,6,Admin,UserLogin,6,Lukas logged in
+2025-10-21 08:56:23,6,Admin,UserLogin,6,Lukas logged in
+2025-10-21 09:17:03,17,User,RegistrationRequested,17,17 requested registration
+2025-10-21 09:17:16,6,Admin,UserLogin,6,Lukas logged in
+2025-10-21 09:34:55,18,User,RegistrationRequested,18,Lukasw requested registration
+2025-10-21 09:45:06,6,Admin,UserLogin,6,Lukas logged in
+2025-10-21 09:45:51,6,Admin,UserLogin,6,Lukas logged in
+2025-10-21 09:46:49,6,Admin,PersonnelAccountCreated,19,Lukas created a personnel account for Manny
+>>>>>>> c4a33cd4ea31b0d96493012d90957d9b11401ca8

@@ -90,6 +90,80 @@ class User
             Console.Write($"{Permissions[i]}, ");
         }
     }
+    public static User TryLogin(User active_user, string username, string password, List<User> users)
+    {
+        foreach (User user in users)
+        {
+            if (username == user.Username && password == user.Password && user.TryPermission(Permission.UserLogin))
+            {
+                active_user = user;
+                EventLog.Eventlogger(active_user, EventType.UserLogin, active_user);
+                Console.WriteLine("login sucessful. Press Enter to continue");
+                Console.ReadLine();
+                return active_user;
+            }
+        }
+        Console.WriteLine("login failed. Press Enter to continue");
+        Console.ReadLine();
+        return active_user;
+    }
+
+    public static void RegisterNewUser(User? active_user, List<User> users, string path, Role role)
+    {
+        bool is_viable = true;
+        Console.Write("enter username: ");
+        string? u_input = Console.ReadLine();
+
+        foreach (User user in users)
+        {
+            if (user.Username == u_input)
+            {
+                Console.WriteLine($"Username: {u_input} is already in use.");
+
+                Console.WriteLine("press enter to continue..");
+                Console.ReadLine();
+
+                is_viable = false;
+                break;
+            }
+        }
+        if (is_viable)
+        {
+            Console.Write("enter password: ");
+            string? p_input = Console.ReadLine();
+
+            if (!String.IsNullOrWhiteSpace(u_input) && !String.IsNullOrWhiteSpace(p_input)) // Godkänd av MAX
+            {
+                int userID_count = FileHandler.Read_count();
+                {
+
+                    User user = new User(userID_count, u_input, p_input, role, Location.Hospital, Region.Region);
+                    users.Add(user);
+                    if (user.UserRole == Role.User)
+                    {
+                        EventLog.Eventlogger(user, EventType.RegistrationRequested, user);
+                        Console.WriteLine("User added, ID: " + userID_count);
+                    }
+                    else if (user.UserRole == Role.Admin || user.UserRole == Role.Staff)
+                    {
+                        user.Permissions.Add(Permission.UserLogin);
+                        EventLog.Eventlogger(active_user, EventType.PersonnelAccountCreated, user);
+                        Console.WriteLine("Personnel account added, ID: " + userID_count);
+                    }
+                }
+                // counter for UserID
+                userID_count++;
+                FileHandler.Write_count(userID_count);
+
+                // writes from list to Users.csv
+                FileHandler.Write(users, path);
+            }
+            else
+            {
+                Console.WriteLine("invalid input");
+            }
+        }
+    }
 }
 
 enum Permission

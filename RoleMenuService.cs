@@ -16,12 +16,14 @@ class RoleMenuService
             Console.WriteLine($"{optionNumber}) Permission required...");
     }
     public static void ShowPermissionMenu_Staff(User activeUser)
+<<<<<<< HEAD
+=======
     {
         bool running = true;
 
         while (running)
         {
-            Console.WriteLine($"Logged in as {activeUser.UserRole}: {activeUser.Username}");
+            Console.WriteLine($"Logged in as {activeUser.UserRole}: ID:{activeUser.Username}");
             Console.WriteLine("Select an action:\n");
 
             ShowMenuOption(activeUser, Permission.ViewPatientJournalEntries, 1, "View a patient's journal entries");
@@ -68,8 +70,8 @@ class RoleMenuService
                     break;
 
                 case "0":
-                    running = false;
                     Console.WriteLine("Logging out...");
+                    running = false;
                     break;
 
                 default:
@@ -77,6 +79,124 @@ class RoleMenuService
                     Console.ReadLine();
                     break;
             }
+        }
+    }
+    public static void ShowPermissionMenu_Admin(User activeUser, List<User> users, string path)
+>>>>>>> c4a33cd4ea31b0d96493012d90957d9b11401ca8
+    {
+        bool running = true;
+
+        while (running)
+        {
+            Console.WriteLine($"Logged in as {activeUser.UserRole}: {activeUser.Username}");
+            Console.WriteLine("Select an action:\n");
+<<<<<<< HEAD
+
+            ShowMenuOption(activeUser, Permission.ViewPatientJournalEntries, 1, "View a patient's journal entries");
+            ShowMenuOption(activeUser, Permission.SetHiddenEntries, 2, "Mark journal entries as sensitive / non-sensitive");
+            ShowMenuOption(activeUser, Permission.RegisterAppointments, 3, "Register a new appointment");
+            ShowMenuOption(activeUser, Permission.ModifyAppointments, 4, "Modify an existing appointment");
+            ShowMenuOption(activeUser, Permission.ApproveAppointmentRequests, 5, "Approve appointment requests");
+            ShowMenuOption(activeUser, Permission.ViewLocationSchedule, 6, "View the schedule of a location");
+
+            Console.WriteLine("0) Logout");
+=======
+            ShowMenuOption(activeUser, Permission.HandlePermissionSystem, 1, "Handle the permission system (fine granularity)");
+            ShowMenuOption(activeUser, Permission.AssignAdminsToRegions, 2, "Assign admins to certain regions");
+            ShowMenuOption(activeUser, Permission.HandleRegistrations, 3, "Handle registrations");
+            ShowMenuOption(activeUser, Permission.AddLocations, 4, "Add new locations");
+            ShowMenuOption(activeUser, Permission.CreatePersonnelAccounts, 5, "Create accounts for personnel");
+            ShowMenuOption(activeUser, Permission.ViewPermissionOverview, 6, "View who has permission to what");
+
+            Console.WriteLine("0) Logout");
+
+>>>>>>> c4a33cd4ea31b0d96493012d90957d9b11401ca8
+            Console.Write("\nSelect an option: ");
+            string? input = Console.ReadLine();
+
+            switch (input)
+            {
+                case "1":
+<<<<<<< HEAD
+                    // ViewPatientJournalEntries()
+                    Console.WriteLine("Viewing patient journals...");
+                    break;
+
+                case "2":
+                    // MarkJournalEntrySensitivity()
+                    Console.WriteLine("Marking journal entry sensitivity...");
+                    break;
+
+                case "3":
+                    // RegisterAppointments()
+                    Console.WriteLine("Registering a new appointment...");
+                    break;
+
+                case "4":
+                    // ModifyAppointments()
+                    Console.WriteLine("Modifying an appointment...");
+                    break;
+
+                case "5":
+                    // ApproveAppointmentRequests()
+                    Console.WriteLine("Approving appointment request...");
+                    break;
+
+                case "6":
+                    // ViewLocationSchedule()
+                    Console.WriteLine("Viewing location schedule...");
+=======
+                    Console.WriteLine("Opening Permission System...");
+                    // PermissionManager.ManagePermissions(activeUser);
+                    break;
+
+                case "2":
+                    Console.WriteLine("Assigning Admins to Regions...");
+                    // RegionManager.AssignAdminToRegion(activeUser);
+                    break;
+
+                case "3":
+                    if (activeUser.TryPermission(Permission.HandleRegistrations))
+                    {
+                        Permissions.HandleRegistrations(activeUser, users, path);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Permission denied...");
+                    }
+                    break;
+
+                case "4":
+                    Console.WriteLine("Adding new Location...");
+                    // LocationManager.AddLocation(activeUser);
+                    break;
+
+                case "5":
+                    Console.WriteLine("Creating Personnel Account...");
+                    Permissions.CreatePersonnel(activeUser, users, path, Role.Staff);
+                    break;
+
+                case "6":
+                    Console.WriteLine("Viewing Permission Overview...");
+                    // PermissionViewer.ShowOverview(activeUser);
+>>>>>>> c4a33cd4ea31b0d96493012d90957d9b11401ca8
+                    break;
+
+                case "0":
+                    running = false;
+                    Console.WriteLine("Logging out...");
+<<<<<<< HEAD
+=======
+                    activeUser = null;
+>>>>>>> c4a33cd4ea31b0d96493012d90957d9b11401ca8
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid selection. Press Enter to continue.");
+                    Console.ReadLine();
+                    break;
+            }
+<<<<<<< HEAD
 <<<<<<< HEAD
             else if (activeUser.UserRole == Role.Patient)// Om den inloggade användaren är en patient
             {  // Visar vilka menyval patienten har beroende på sina permissions
@@ -144,10 +264,13 @@ class RoleMenuService
                     Console.ReadLine();
                 }
 =======
+=======
+>>>>>>> c4a33cd4ea31b0d96493012d90957d9b11401ca8
             if (running)
             {
                 Console.WriteLine("\nPress Enter to continue...");
                 Console.ReadLine();
+<<<<<<< HEAD
 >>>>>>> main
             }
         }
@@ -312,6 +435,100 @@ class RoleMenuService
             }
         }
 
+=======
+            }
+            else break;
+        }
+    }
+    public static void ShowPermissionMenu_Patient(User activeUser)
+    {
+        bool running = true;
+
+        while (running)
+        {
+            ShowMenuOption(activeUser, Permission.ViewJournal, 1, "View my own journal");
+            ShowMenuOption(activeUser, Permission.RequestAppointment, 2, "Request an appointment");
+            ShowMenuOption(activeUser, Permission.ViewSchedule, 3, "View my schedule");
+
+            Console.WriteLine("0) Logout");
+
+            Console.Write("\nSelect an option: ");
+            string? input = Console.ReadLine();
+
+            switch (input)
+            {
+                case "1":
+                    if (activeUser.TryPermission(Permission.ViewJournal))
+                    {
+                        Console.WriteLine("Opening your personal journal...");
+                        JournalManager.ViewJournal(activeUser);
+                    }
+                    else
+                    {
+                        Console.WriteLine("You do not have permission to view your journal.");
+                    }
+                    break;
+
+                case "2":
+                    if (activeUser.TryPermission(Permission.RequestAppointment))
+                    {
+                        Console.WriteLine("Requesting an appointment...");
+                        AppointmentManager.RequestAppointment(activeUser);
+                    }
+                    else
+                    {
+                        Console.WriteLine("You do not have permission to request an appointment.");
+                    }
+                    break;
+
+                case "3":
+                    if (activeUser.TryPermission(Permission.ViewSchedule))
+                    {
+                        Console.WriteLine("Viewing your schedule...");
+                        ScheduleManager.ViewOwnSchedule(activeUser);
+                    }
+                    else
+                    {
+                        Console.WriteLine("You do not have permission to view your schedule.");
+                    }
+                    break;
+
+                case "0":
+                    running = false;
+                    Console.WriteLine("Logging out...");
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid selection. Press Enter to continue.");
+                    Console.ReadLine();
+                    break;
+            }
+
+            if (running)
+            {
+                Console.WriteLine("\nPress Enter to continue...");
+                Console.ReadLine();
+            }
+        }
+
+    }
+}
+
+
+// ----------- PATIENT-METODER --------------
+
+// Dessa 3 metoder anropas från RoleMenuService när patienten
+// väljer ett alternativ i menyn.
+// Hanterar allt som har med patientens journal att göra
+class JournalManager
+{
+    public static void ViewJournal(User activeUser)
+    {
+        Console.WriteLine($"Showing journal for {activeUser.Username}...");
+        // Här kan du senare läsa från en fil eller databas där journaler sparas
+        // Exempel: just nu skriver vi bara ut en enkel text.
+        Console.WriteLine("No journal entries found yet.");
+>>>>>>> c4a33cd4ea31b0d96493012d90957d9b11401ca8
     }
 }
 
