@@ -39,7 +39,7 @@ while (true)
             Console.Write("enter password: ");
             string? p_input = Console.ReadLine();
 
-            active_user = User.TryLogin(active_user, u_input, p_input, users);       
+            active_user = User.TryLogin(active_user, u_input, p_input, users);
         }
     }
 
@@ -60,5 +60,6 @@ while (true)
                 RoleMenuService.ShowPermissionMenu_Patient(active_user);
                 break;
         }
+        active_user = null;
     }
 }
