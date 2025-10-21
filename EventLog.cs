@@ -53,7 +53,7 @@ class EventLog
     }
     // DateTime.Now
 
-    public static void Eventlogger(User user, EventType type) // DEV: how do we log target?
+    public static void Eventlogger(User user, EventType type, User target) // DEV: how do we log target?
     {
         if (type == EventType.UserLogin)
             FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, user.UserID, $"{user.Username} logged in"));
@@ -74,13 +74,13 @@ class EventLog
             FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, user.UserID, $"{user.Username} requested registration"));
 
         else if (type == EventType.RegistrationAccepted)
-            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} accepted registration"));
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, target.UserID, $"{user.Username} accepted the registration request of {target.Username}"));
 
         else if (type == EventType.RegistrationDenied)
-            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} denied registration"));
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, target.UserID, $"{user.Username} denied the registration request of {target.Username}"));
 
         else if (type == EventType.PersonnelAccountCreated)
-            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} created a personnel account"));
+            FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, target.UserID, $"{user.Username} created a personnel account for {target.Username}"));
 
         else if (type == EventType.LocationAdded)
             FileHandler.LogEvent(new EventLog(DateTime.Now, user.UserID, user.UserRole, type, 0, $"{user.Username} added a location"));

@@ -21,7 +21,7 @@ class RoleMenuService
 
         while (running)
         {
-            Console.WriteLine($"Logged in as {activeUser.UserRole}: {activeUser.Username}");
+            Console.WriteLine($"Logged in as {activeUser.UserRole}: ID:{activeUser.Username}");
             Console.WriteLine("Select an action:\n");
 
             ShowMenuOption(activeUser, Permission.ViewPatientJournalEntries, 1, "View a patient's journal entries");
@@ -68,19 +68,14 @@ class RoleMenuService
                     break;
 
                 case "0":
-                    running = false;
                     Console.WriteLine("Logging out...");
+                    running = false;
                     break;
 
                 default:
                     Console.WriteLine("Invalid selection. Press Enter to continue.");
                     Console.ReadLine();
                     break;
-            }
-            if (running)
-            {
-                Console.WriteLine("\nPress Enter to continue...");
-                Console.ReadLine();
             }
         }
     }
@@ -98,8 +93,6 @@ class RoleMenuService
             ShowMenuOption(activeUser, Permission.AddLocations, 4, "Add new locations");
             ShowMenuOption(activeUser, Permission.CreatePersonnelAccounts, 5, "Create accounts for personnel");
             ShowMenuOption(activeUser, Permission.ViewPermissionOverview, 6, "View who has permission to what");
-            ShowMenuOption(activeUser, Permission.AcceptPatientRegistrations, 7, "Accept user registration as patients");
-            ShowMenuOption(activeUser, Permission.DenyPatientRegistrations, 8, "Deny user registration as patients");
 
             Console.WriteLine("0) Logout");
 
@@ -127,7 +120,7 @@ class RoleMenuService
                     {
                         Console.WriteLine("Permission denied...");
                     }
-                        break;
+                    break;
 
                 case "4":
                     Console.WriteLine("Adding new Location...");
@@ -136,7 +129,7 @@ class RoleMenuService
 
                 case "5":
                     Console.WriteLine("Creating Personnel Account...");
-                    // PersonnelManager.CreatePersonnel(activeUser);
+                    Permissions.CreatePersonnel(activeUser, users, path, Role.Staff);
                     break;
 
                 case "6":
@@ -144,19 +137,10 @@ class RoleMenuService
                     // PermissionViewer.ShowOverview(activeUser);
                     break;
 
-                case "7":
-                    Console.WriteLine("Accepting Patient Registration...");
-                    // RegistrationManager.AcceptRegistration(activeUser);
-                    break;
-
-                case "8":
-                    Console.WriteLine("Denying Patient Registration...");
-                    // RegistrationManager.DenyRegistration(activeUser);
-                    break;
-
                 case "0":
                     running = false;
                     Console.WriteLine("Logging out...");
+                    activeUser = null;
                     break;
 
                 default:
@@ -169,6 +153,7 @@ class RoleMenuService
                 Console.WriteLine("\nPress Enter to continue...");
                 Console.ReadLine();
             }
+            else break;
         }
     }
     public static void ShowPermissionMenu_Patient(User activeUser)
