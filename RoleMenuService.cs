@@ -15,78 +15,18 @@ class RoleMenuService
         else
             Console.WriteLine($"{optionNumber}) Permission required...");
     }
-    public static void ShowPermissionMenu_Staff(User activeUser)
-    {
-        bool running = true;
 
-        while (running)
-        {
-            Console.WriteLine($"Logged in as {activeUser.UserRole}: ID:{activeUser.Username}");
-            Console.WriteLine("Select an action:\n");
-
-            ShowMenuOption(activeUser, Permission.ViewPatientJournalEntries, 1, "View a patient's journal entries");
-            ShowMenuOption(activeUser, Permission.SetHiddenEntries, 2, "Mark journal entries as sensitive / non-sensitive");
-            ShowMenuOption(activeUser, Permission.RegisterAppointments, 3, "Register a new appointment");
-            ShowMenuOption(activeUser, Permission.ModifyAppointments, 4, "Modify an existing appointment");
-            ShowMenuOption(activeUser, Permission.ApproveAppointmentRequests, 5, "Approve appointment requests");
-            ShowMenuOption(activeUser, Permission.ViewLocationSchedule, 6, "View the schedule of a location");
-
-            Console.WriteLine("0) Logout");
-            Console.Write("\nSelect an option: ");
-            string? input = Console.ReadLine();
-
-            switch (input)
-            {
-                case "1":
-                    // ViewPatientJournalEntries()
-                    Console.WriteLine("Viewing patient journals...");
-                    break;
-
-                case "2":
-                    // MarkJournalEntrySensitivity()
-                    Console.WriteLine("Marking journal entry sensitivity...");
-                    break;
-
-                case "3":
-                    // RegisterAppointments()
-                    Console.WriteLine("Registering a new appointment...");
-                    break;
-
-                case "4":
-                    // ModifyAppointments()
-                    Console.WriteLine("Modifying an appointment...");
-                    break;
-
-                case "5":
-                    // ApproveAppointmentRequests()
-                    Console.WriteLine("Approving appointment request...");
-                    break;
-
-                case "6":
-                    // ViewLocationSchedule()
-                    Console.WriteLine("Viewing location schedule...");
-                    break;
-
-                case "0":
-                    Console.WriteLine("Logging out...");
-                    running = false;
-                    break;
-
-                default:
-                    Console.WriteLine("Invalid selection. Press Enter to continue.");
-                    Console.ReadLine();
-                    break;
-            }
-        }
-    }
     public static void ShowPermissionMenu_Admin(User activeUser, List<User> users, string path)
-    {
+    {                   // tar in parametrar inloggad User,    Lista på Users,    Path för CSV filen
         bool running = true;
 
         while (running)
         {
+            // Visar inloggad användare
             Console.WriteLine($"Logged in as {activeUser.UserRole}: {activeUser.Username}");
             Console.WriteLine("Select an action:\n");
+
+            // Funktionen "ShowMenuOption" kollar om du har rättigheten och skriver antingen ut meny valet eller permission required
             ShowMenuOption(activeUser, Permission.HandlePermissionSystem, 1, "Handle the permission system (fine granularity)");
             ShowMenuOption(activeUser, Permission.AssignAdminsToRegions, 2, "Assign admins to certain regions");
             ShowMenuOption(activeUser, Permission.HandleRegistrations, 3, "Handle registrations");
@@ -158,6 +98,71 @@ class RoleMenuService
             else break;
         }
     }
+    public static void ShowPermissionMenu_Staff(User activeUser)
+    {
+        bool running = true;
+
+        while (running)
+        {
+            Console.WriteLine($"Logged in as {activeUser.UserRole}: ID:{activeUser.Username}");
+            Console.WriteLine("Select an action:\n");
+
+            ShowMenuOption(activeUser, Permission.ViewPatientJournalEntries, 1, "View a patient's journal entries");
+            ShowMenuOption(activeUser, Permission.SetHiddenEntries, 2, "Mark journal entries as sensitive / non-sensitive");
+            ShowMenuOption(activeUser, Permission.RegisterAppointments, 3, "Register a new appointment");
+            ShowMenuOption(activeUser, Permission.ModifyAppointments, 4, "Modify an existing appointment");
+            ShowMenuOption(activeUser, Permission.ApproveAppointmentRequests, 5, "Approve appointment requests");
+            ShowMenuOption(activeUser, Permission.ViewLocationSchedule, 6, "View the schedule of a location");
+
+            Console.WriteLine("0) Logout");
+            Console.Write("\nSelect an option: ");
+            string? input = Console.ReadLine();
+
+            switch (input)
+            {
+                case "1":
+                    // ViewPatientJournalEntries()
+                    Console.WriteLine("Viewing patient journals...");
+                    break;
+
+                case "2":
+                    // MarkJournalEntrySensitivity()
+                    Console.WriteLine("Marking journal entry sensitivity...");
+                    break;
+
+                case "3":
+                    // RegisterAppointments()
+                    Console.WriteLine("Registering a new appointment...");
+                    break;
+
+                case "4":
+                    // ModifyAppointments()
+                    Console.WriteLine("Modifying an appointment...");
+                    break;
+
+                case "5":
+                    // ApproveAppointmentRequests()
+                    Console.WriteLine("Approving appointment request...");
+                    break;
+
+                case "6":
+                    // ViewLocationSchedule()
+                    Console.WriteLine("Viewing location schedule...");
+                    break;
+
+                case "0":
+                    Console.WriteLine("Logging out...");
+                    running = false;
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid selection. Press Enter to continue.");
+                    Console.ReadLine();
+                    break;
+            }
+        }
+    }
+
     public static void ShowPermissionMenu_Patient(User activeUser)
     {
         bool running = true;
