@@ -16,8 +16,10 @@ class Permissions
         // EventLog.Eventlogger(activeUser, EventLog.EventType.AdminAssignedToRegion);
     }
     public static void HandleRegistrations(User activeUser, List<User> users, string path)
-    {
+    {   // funktionen tar in parametrar: inloggad användare, en lista på alla users och var i filhanteringen som listan är sparad
+
         // Visar en lista på alla requested registrations
+        // skriver ut en lista med alla som har rollen User
         Console.WriteLine("List of registration requests");
         foreach (User user in users)
         {
@@ -26,52 +28,72 @@ class Permissions
                 Console.WriteLine($"UserID: {user.UserID}, Username: {user.Username}\n");
             }
         }
+        //
 
-        // Kollar om user får accept eller deny registration requests
+        // Kollar om user får lov att accept eller deny registration requests
         if (activeUser.TryPermission(Permission.AcceptPatientRegistrations) || activeUser.TryPermission(Permission.DenyPatientRegistrations))
         {
-            // Frågar admin om ett id och sedan konverterar det till en int
+            // Frågar admin om ett id på den personen som du vill acceptera eller deny
             Console.Write("Chose an id: ");
+
+            // Läser in vad användaren skrev in.
             string input_userid = Console.ReadLine();
+
+            // Sedan gör om från string till en int
             int.TryParse(input_userid, out int userid);
 
-            // Loopar igenom våra användare i vår list och matchar idt med det som admin skrev. Sedan frågar om admin om de vill acceptera eller deny request
             bool user_found = false;
+            // Loopar igenom våra användare i vår list och matchar ID med det som admin skrev (siffran). 
             foreach (User user in users)
             {
                 if (user.UserID == userid && user.UserRole == Role.User)
                 {
                     user_found = true;
+
                     // Menu based on Permissions
+                    // Sedan frågar om admin om de vill acceptera eller deny request
                     if (activeUser.TryPermission(Permission.AcceptPatientRegistrations)) { Console.Write("Accept"); }
+
                     if (activeUser.TryPermission(Permission.AcceptPatientRegistrations) && activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write(" or "); }
+
                     if (activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("Deny"); }
                     Console.Write(" registration? (");
+
+
                     if (activeUser.TryPermission(Permission.AcceptPatientRegistrations)) { Console.Write("A"); }
                     if (activeUser.TryPermission(Permission.AcceptPatientRegistrations) && activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("/"); }
                     if (activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("D"); }
                     Console.WriteLine(")");
+
+                    // skriver ut den valda personens ID och användarnamn
                     Console.WriteLine($"User ID: {user.UserID}, Name: {user.Username}");
 
+                    // läser in A/D
                     string input_accept_deny = Console.ReadLine();
 
+                    // Om du skriver in "A"
                     if (input_accept_deny == "A" && activeUser.TryPermission(Permission.AcceptPatientRegistrations))
                     {
-                        user.UserRole = Role.Patient;
-                        user.Permissions.Add(Permission.UserLogin);
-                        FileHandler.Write(users, path); // update userlist
+                        user.UserRole = Role.Patient; // ändrar rollen på den som frågar om registration till Patient
+                        user.Permissions.Add(Permission.UserLogin); // lägger till permissions som en patient ska ha. Nu kan dem logga in.
+                        FileHandler.Write(users, path); // updaterar CSV filen med Users Så att rollen är patient
                         EventLog.Eventlogger(activeUser, EventType.RegistrationAccepted, user); // log event
+
                         Console.WriteLine($"\nUser ID: {user.UserID}, Name: {user.Username} Registration Complete");
                         break;
                     }
+
+                    // Om du skriver in "D"
                     else if (input_accept_deny == "D" && activeUser.TryPermission(Permission.DenyPatientRegistrations))
                     {
-                        user.UserRole = Role.Denied;
-                        FileHandler.Write(users, path); // update userlist
+                        user.UserRole = Role.Denied; // ändrar rollen på den som frågar om registration till Denied
+                        FileHandler.Write(users, path); // update CSV filen
                         EventLog.Eventlogger(activeUser, EventType.RegistrationDenied, user); // log event
+
                         Console.WriteLine($"\nUser ID: {user.UserID}, Name: {user.Username} Registration Denied");
                         break;
                     }
+                    // Om du skriver in vad som helst annat
                     else
                         Console.WriteLine("cancelled");
 

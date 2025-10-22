@@ -112,8 +112,10 @@ class RoleMenuService
                     break;
 
                 case "3":
+                    // denna if-sats testar om användaren har permission att handle registrations
                     if (activeUser.TryPermission(Permission.HandleRegistrations))
                     {
+                        // om dem har det så körs denna funktionen:
                         Permissions.HandleRegistrations(activeUser, users, path);
                     }
                     else
