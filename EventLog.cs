@@ -2,12 +2,13 @@ namespace App;
 
 class EventLog
 {
-
-    public DateTime Timestamp;
-    public int UserID;
+    // eventloggen är en egen lista 
+    // Constructorn 
+    public DateTime Timestamp; // tiden
+    public int UserID; // vem som gör något
     public Role Role;
-    public EventType Category;
-    public int Target;
+    public EventType Category; // vad är det för Typ av event
+    public int Target; // vem det handlar om
     public string? Description;
 
     public EventLog(DateTime timestamp, int userId, Role role, EventType category, int target, string? description)
@@ -23,12 +24,14 @@ class EventLog
 
 
 
-    public string ToCsv()
+    public string ToCsv() // Konverterar variablerna i Listan till string för CSV
     {
         string date = Timestamp.ToString("G");
         return $"{date},{UserID},{Role},{Category},{Target},{Description}";
     }
-    public static EventLog FromCsv(string string_of_events)
+
+
+    public static EventLog FromCsv(string string_of_events) // konverterar string till en EventLog
     {
         string[] col = string_of_events.Split(','); // saves each varible in string array.
 
