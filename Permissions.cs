@@ -52,9 +52,9 @@ class Permissions
 
                     // Menu based on Permissions
                     // Sedan frågar om admin om de vill acceptera eller deny request
-                    if (activeUser.TryPermission(Permission.AcceptPatientRegistrations)) { Console.Write("Accept registration? (A)"); }
 
-                    else if (activeUser.TryPermission(Permission.AcceptPatientRegistrations) && activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("Accept/Deny registration? (A/D)"); }
+                    if (activeUser.TryPermission(Permission.AcceptPatientRegistrations) && activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("Accept/Deny registration? (A/D)"); }
+                    else if (activeUser.TryPermission(Permission.AcceptPatientRegistrations)) { Console.Write("Accept registration? (A)"); }
 
                     else if (activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("Deny registration? (D)"); }
                 
