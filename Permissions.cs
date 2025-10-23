@@ -52,19 +52,12 @@ class Permissions
 
                     // Menu based on Permissions
                     // Sedan frågar om admin om de vill acceptera eller deny request
-                    if (activeUser.TryPermission(Permission.AcceptPatientRegistrations)) { Console.Write("Accept"); }
+                    if (activeUser.TryPermission(Permission.AcceptPatientRegistrations)) { Console.Write("Accept registration? (A)"); }
 
-                    if (activeUser.TryPermission(Permission.AcceptPatientRegistrations) && activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write(" or "); }
+                    else if (activeUser.TryPermission(Permission.AcceptPatientRegistrations) && activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("Accept/Deny registration? (A/D)"); }
 
-                    if (activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("Deny"); }
-                    Console.Write(" registration? (");
-
-
-                    if (activeUser.TryPermission(Permission.AcceptPatientRegistrations)) { Console.Write("A"); }
-                    if (activeUser.TryPermission(Permission.AcceptPatientRegistrations) && activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("/"); }
-                    if (activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("D"); }
-                    Console.WriteLine(")");
-
+                    else if (activeUser.TryPermission(Permission.DenyPatientRegistrations)) { Console.Write("Deny registration? (D)"); }
+                
                     // skriver ut den valda personens ID och användarnamn
                     Console.WriteLine($"User ID: {user.UserID}, Name: {user.Username}");
 
